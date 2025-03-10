@@ -19,13 +19,13 @@ The project is already structured to work with Vercel:
 - `/api` - Contains serverless function files for your API endpoints
 - `vercel.json` - Configuration file for Vercel deployment
 
-## Deployment Steps
+## Build and Install Commands
 
-### Option 1: Using GitHub Integration (Recommended)
+When deploying to Vercel, the following commands will be executed:
 
-1. Push your project to a GitHub repository
-2. Log in to your Vercel dashboard
-3. Click "Import Project"
+```
+# Installation
+npm install
 4. Select "Import Git Repository" and choose your repository
 5. Configure project:
    - Framework Preset: Other

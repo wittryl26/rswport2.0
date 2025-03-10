@@ -90,3 +90,34 @@ To start the production server:
 ```bash
 npm start
 ```
+
+# Repository Structure Fix
+
+If files aren't appearing in their correct directories after a GitHub import, follow these steps:
+
+1. Make sure all files are added to git:
+   ```
+   git add .
+   ```
+
+2. Check which files are tracked vs untracked:
+   ```
+   ./check-git-status.sh
+   ```
+
+3. If needed, manually move files to their correct locations:
+   ```
+   git mv [source] [destination]
+   ```
+
+4. Commit and push your changes:
+   ```
+   git commit -m "Fix directory structure"
+   git push origin main
+   ```
+
+Note: If Git is not recognizing changes to your directory structure, you might need to:
+
+1. Ensure you don't have any Git configuration issues
+2. Try force adding with `git add -f [directory]/*`
+3. Check if any `.gitignore` settings are preventing tracking

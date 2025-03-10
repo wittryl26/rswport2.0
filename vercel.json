@@ -1,31 +1,22 @@
 {
   "version": 2,
-  "builds": [
-    { 
-      "src": "Frontend/**/*", 
-      "use": "@vercel/static" 
-    },
-    { 
-      "src": "api/**/*.js", 
-      "use": "@vercel/node" 
+  "buildCommand": "",
+  "outputDirectory": "Frontend",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    { 
-      "src": "/api/(.*)", 
-      "dest": "/api/$1" 
+      "src": "/(.*)",
+      "dest": "/Frontend/$1"
     },
-    { 
-      "src": "/(.*)", 
-      "dest": "/Frontend/$1" 
+    {
+      "handle": "filesystem"
     },
-    { 
-      "src": "/", 
-      "dest": "/Frontend/index.html" 
+    {
+      "src": "/(.*)",
+      "dest": "/Frontend/index.html"
     }
   ]
 }
