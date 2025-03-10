@@ -1,0 +1,11 @@
+# Temporary .gitignore that INCLUDES files
+# The ! pattern negates the exclusion
+!*.html
+!*.css
+!*.js
+!*.json
+!*.md
+!*.jpg
+!*.png
+!*.svg
+!.gitkeep

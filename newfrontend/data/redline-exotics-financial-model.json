@@ -1,0 +1,221 @@
+{
+  "title": "Redline Exotics - Financial Model",
+  "subtitle": "5-Year Financial Projections (2023-2028)",
+  "preparedDate": "02/10/2023",
+  "sections": [
+    {
+      "title": "Profit & Loss Statement",
+      "description": "ProForma profit/loss statement showing revenue, expenses and net earnings",
+      "headers": ["Category", "2023*", "2024", "2025", "2026", "2027", "2028"],
+      "sections": [
+        {
+          "title": "Revenue",
+          "rows": [
+            ["Gross Sales", "$150,000", "$1,147,500", "$2,180,250", "$2,945,250", "$3,748,500", "$4,016,250"],
+            ["Less Sales Returns and Allowances", "$0", "$0", "$0", "$0", "$0", "$0"],
+            ["Net Sales", "$150,000", "$1,147,500", "$2,180,250", "$2,945,250", "$3,748,500", "$4,016,250"]
+          ]
+        },
+        {
+          "title": "Cost of Services",
+          "rows": [
+            ["Depreciation and Amoritization", "$77,600", "$62,080", "$126,027", "$166,347", "$197,920", "$136,693"],
+            ["Remote Security Devices", "$516", "$276", "$870", "$879", "$1,413", "$1,611"],
+            ["Annual Maintenance", "$6,900", "$6,900", "$13,900", "$17,900", "$24,100", "$25,300"],
+            ["Vehicle Registration", "$900", "$90", "$765", "$608", "$1,103", "$1,418"],
+            ["Vehicle Purchase Sales Tax", "$34,920", "$0", "$35,760", "$32,280", "$34,800", "$48,600"],
+            ["Vehicle Titles", "$300", "$0", "$225", "$150", "$300", "$375"],
+            ["Vehicle Insurance", "$20,000", "$48,000", "$84,000", "$108,000", "$156,000", "$168,000"],
+            ["Total Cost of Goods Sold (COGS)", "$141,136", "$117,346", "$261,547", "$326,163", "$415,636", "$381,997"],
+            ["Gross Profit (LOSS)", "$8,864", "$1,030,154", "$1,918,703", "$2,619,087", "$3,332,865", "$3,634,253"]
+          ]
+        },
+        {
+          "title": "Operating Expenses",
+          "rows": [
+            ["SEO", "$33,828", "$37,211", "$40,932", "$45,025", "$49,528", "$54,480"],
+            ["Website", "$3,812", "$312", "$312", "$312", "$312", "$312"],
+            ["Garage Lease", "$1,500", "$1,500", "$50,000", "$50,000", "$50,000", "$50,000"],
+            ["Operating Maintenance", "$6,720", "$6,720", "$10,860", "$15,900", "$22,180", "$24,160"],
+            ["Unexpected Maintenance Budget", "$40,000", "$40,000", "$70,000", "$110,000", "$140,000", "$140,000"],
+            ["Filing and Legal Fees", "$5,370", "$5,189", "$5,189", "$5,189", "$5,189", "$5,189"],
+            ["Office Expenses", "$8,471", "$32,573", "$63,971", "$81,673", "$100,260", "$106,456"],
+            ["Marketing", "$25,150", "$37,725", "$56,588", "$84,881", "$127,322", "$190,983"],
+            ["Other Operating Expenses", "$570", "$1,500", "$2,625", "$3,750", "$5,250", "$6,000"],
+            ["Total Selling Expenses", "$125,421", "$162,730", "$300,476", "$396,730", "$500,040", "$577,580"]
+          ]
+        },
+        {
+          "title": "General and Administrative Expenses",
+          "rows": [
+            ["Salaries and Wages", "$45,000", "$180,000", "$180,000", "$300,000", "$300,000", "$450,000"],
+            ["FICA, Unemployment Taxes", "$0", "$0", "$7,862", "$13,104", "$20,966", "$26,208"],
+            ["Business Insurance", "$2,000", "$2,000", "$2,000", "$2,000", "$2,000", "$2,000"],
+            ["Workers Compensation Insurance", "$1,620", "$1,620", "$3,240", "$4,320", "$5,940", "$7,020"],
+            ["Total General and Administrative Expenses", "$48,620", "$183,620", "$193,102", "$319,424", "$328,906", "$485,228"],
+            ["Total Operating Expenses", "$174,041", "$346,350", "$493,579", "$716,154", "$828,947", "$1,062,808"],
+            ["Net Earnings (LOSS)", "-$165,177", "$683,804", "$1,425,125", "$1,902,933", "$2,503,918", "$2,571,445"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Balance Sheet",
+      "description": "ProForma balance sheet showing assets, liabilities, and owner's equity",
+      "headers": ["Category", "2023*", "2024", "2025", "2026", "2027", "2028"],
+      "sections": [
+        {
+          "title": "Assets",
+          "rows": []
+        },
+        {
+          "title": "Current Assets",
+          "rows": [
+            ["Cash", "$120,123", "$702,148", "$853,954", "$1,510,980", "$2,044,730", "$1,710,029"],
+            ["Inventory", "", "", "", "", "", ""],
+            ["Prepaid Expenses", "$22,000", "$50,000", "$86,000", "$110,000", "$158,000", "$182,000"],
+            ["Total Current Assets", "$142,123", "$752,148", "$939,954", "$1,620,980", "$2,202,730", "$1,892,029"]
+          ]
+        },
+        {
+          "title": "Fixed (Long-Term) Assets",
+          "rows": [
+            ["Long-Term Investments", "", "", "", "", "", ""],
+            ["Property, Plant, and Equipment", "$587,000", "$587,000", "$1,183,000", "$1,721,000", "$2,301,000", "$3,311,000"],
+            ["(Less Accumulated Depreciation)", "$77,600", "$139,680", "$265,707", "$432,053", "$629,973", "$766,667"],
+            ["Intangible Assets", "", "", "", "", "", ""],
+            ["Total Fixed Assets", "$509,400", "$447,320", "$917,293", "$1,288,947", "$1,671,027", "$2,544,333"],
+            ["Total Assets", "$651,523", "$1,199,468", "$1,857,248", "$2,909,927", "$3,873,757", "$4,436,363"]
+          ]
+        },
+        {
+          "title": "Liabilities and Owner's Equity",
+          "rows": []
+        },
+        {
+          "title": "Current Liabilities",
+          "rows": [
+            ["Accounts Payable", "$0", "$0", "$0", "$0", "$0", "$0"],
+            ["Short-Term Loans", "$0", "$0", "$0", "$0", "$0", "$0"],
+            ["Income Taxes Payable", "$0", "$0", "$0", "$0", "$0", "$0"],
+            ["Accrued Salaries and Wages", "$15,000", "$75,000", "$180,000", "$450,000", "$720,000", "$900,000"],
+            ["Current Portion of Long-Term Debt", "$0", "$223,737", "$223,737", "$223,737", "$223,737", "$223,737"],
+            ["Total Current Liabilities", "$15,000", "$298,737", "$403,737", "$673,737", "$943,737", "$1,123,737"]
+          ]
+        },
+        {
+          "title": "Long-Term Liabilities",
+          "rows": [
+            ["Long-Term Debt", "$750,000", "$638,763", "$510,841", "$363,731", "$194,554", "$0"],
+            ["Deferred Income Tax", "", "", "", "", "", ""],
+            ["Other", "", "", "", "", "", ""],
+            ["Total Long-Term Liabilities", "$750,000", "$638,763", "$510,841", "$363,731", "$194,554", "$0"]
+          ]
+        },
+        {
+          "title": "Owner's Equity",
+          "rows": [
+            ["Owner's Investment", "", "", "", "", "", ""],
+            ["Retained Earnings", "-$165,177", "$683,804", "$1,425,125", "$1,902,933", "$2,503,918", "$2,571,445"],
+            ["Other", "", "", "", "", "", ""],
+            ["Total Owner's Equity", "-$113,477", "$261,968", "$942,670", "$1,872,459", "$2,735,467", "$3,312,626"],
+            ["Total Liabilities and Owner's Equity", "$651,523", "$1,199,468", "$1,857,248", "$2,909,927", "$3,873,757", "$4,436,363"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Financial Ratios",
+      "description": "Key financial ratios calculated from the balance sheet and income statement",
+      "headers": ["Ratio", "2023*", "2024", "2025", "2026", "2027", "2028"],
+      "rows": [
+        ["Debt Ratio", "1.15", "0.53", "0.28", "0.12", "0.05", "0.00"],
+        ["Current Ratio", "9.47", "2.52", "2.33", "2.41", "2.33", "1.68"],
+        ["Working Capital", "$127,123", "$453,411", "$536,218", "$947,244", "$1,258,994", "$768,293"],
+        ["Assets-to-Equity Ratio", "-5.74", "4.58", "1.97", "1.55", "1.42", "1.34"],
+        ["Debt-to-Equity Ratio", "-6.74", "3.58", "0.97", "0.55", "0.42", "0.34"]
+      ]
+    },
+    {
+      "title": "Cash Flow Statement",
+      "description": "ProForma cash flow statement showing operating, investing, and financing activities",
+      "headers": ["Category", "2023*", "2024", "2025", "2026", "2027", "2028"],
+      "sections": [
+        {
+          "title": "Operating Cash Flow",
+          "rows": [
+            ["Net Earnings", "-$165,177", "$683,804", "$1,425,125", "$1,902,933", "$2,503,918", "$2,571,445"],
+            ["Plus: Depreciation & Amortization", "$77,600", "$62,080", "$126,027", "$166,347", "$197,920", "$136,693"],
+            ["Less: Changes in Working Capital", "-$127,123", "-$453,411", "-$536,218", "-$947,244", "-$1,258,994", "-$768,293"],
+            ["Cash from Operations", "-$214,700", "$292,473", "$1,014,934", "$1,122,036", "$1,442,844", "$1,939,846"]
+          ]
+        },
+        {
+          "title": "Investing Cash Flow",
+          "rows": [
+            ["Investments in Property & Equipment", "-$587,000", "$0", "-$596,000", "-$538,000", "-$580,000", "-$1,010,000"],
+            ["Cash from Investing", "-$587,000", "$0", "-$596,000", "-$538,000", "-$580,000", "-$1,010,000"]
+          ]
+        },
+        {
+          "title": "Financing Cash Flow",
+          "rows": [
+            ["Proceeds From Long-Term Debt", "$750,000", "", "", "", "", ""],
+            ["Repayments of Long-Term Debt", "$0", "$223,737", "$223,737", "$223,737", "$223,737", "$223,737"],
+            ["Cash from Financing", "$750,000", "-$223,737", "-$223,737", "-$223,737", "-$223,737", "-$223,737"],
+            ["Net Increase (decrease) in Cash", "-$51,700", "$68,737", "$195,197", "$360,299", "$639,107", "$706,109"],
+            ["Opening Cash Balance", "$0", "-$51,700", "$17,037", "$212,234", "$572,533", "$1,211,640"],
+            ["Closing Cash Balance", "-$51,700", "$17,037", "$212,234", "$572,533", "$1,211,640", "$1,917,749"]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Asset Depreciation Schedule",
+      "description": "Detailed depreciation of the vehicle fleet using Sum of Years Digits (SYOD) method",
+      "headers": ["Asset", "Price", "Purchase Year", "Salvage Value", "Life", "Method", "2023*", "2024", "2025", "2026", "2027", "2028"],
+      "rows": [
+        ["2019 Lamborghini Huracan", "$230,000", "2023", "$138,000", "5", "SYOD", "$30,667", "$24,533", "$18,400", "$12,267", "$6,133", "-"],
+        ["2020 Aston Martin Vantage V8", "$120,000", "2023", "$72,000", "5", "SYOD", "$16,000", "$12,800", "$9,600", "$6,400", "$3,200", "-"],
+        ["2020 Lotus Evora", "$86,000", "2023", "$51,600", "5", "SYOD", "$11,467", "$9,173", "$6,880", "$4,587", "$2,293", "-"],
+        ["2020 Bentley Bentayga", "$146,000", "2023", "$87,600", "5", "SYOD", "$19,467", "$15,573", "$11,680", "$7,787", "$3,893", "-"],
+        ["Lamborghini Huracan", "$230,000", "2025", "$138,000", "5", "SYOD", "-", "-", "$30,667", "$24,533", "$18,400", "$12,267"],
+        ["Ferrari California T", "$196,000", "2025", "$117,600", "5", "SYOD", "-", "-", "$26,133", "$20,907", "$15,680", "$10,453"],
+        ["McLaren 570s", "$170,000", "2025", "$102,000", "5", "SYOD", "-", "-", "$22,667", "$18,133", "$13,600", "$9,067"],
+        ["Lamborghini Urus", "$258,000", "2026", "$154,800", "5", "SYOD", "-", "-", "-", "$34,400", "$27,520", "$20,640"],
+        ["Ferrari 488 GTB", "$280,000", "2026", "$168,000", "5", "SYOD", "-", "-", "-", "$37,333", "$29,867", "$22,400"],
+        ["Rolls Royce Wraith", "$300,000", "2027", "$180,000", "5", "SYOD", "-", "-", "-", "-", "$40,000", "$32,000"],
+        ["Chevrolet Corvette C8", "$90,000", "2027", "$54,000", "5", "SYOD", "-", "-", "-", "-", "$12,000", "$9,600"],
+        ["Mercedes S500", "$90,000", "2027", "$54,000", "5", "SYOD", "-", "-", "-", "-", "$12,000", "$9,600"],
+        ["Cadillac Escalade", "$100,000", "2027", "$60,000", "5", "SYOD", "-", "-", "-", "-", "$13,333", "$10,667"],
+        ["High Performance SUV", "$200,000", "2028", "$120,000", "5", "SYOD", "-", "-", "-", "-", "-", "-"],
+        ["Luxury SUV", "$150,000", "2028", "$90,000", "5", "SYOD", "-", "-", "-", "-", "-", "-"],
+        ["Mid-Range Sports Car", "$90,000", "2028", "$54,000", "5", "SYOD", "-", "-", "-", "-", "-", "-"],
+        ["Exotic Car", "$250,000", "2028", "$150,000", "5", "SYOD", "-", "-", "-", "-", "-", "-"],
+        ["Luxury GT Car", "$120,000", "2028", "$72,000", "5", "SYOD", "-", "-", "-", "-", "-", "-"],
+        ["Total", "", "", "", "", "", "$77,600", "$62,080", "$126,027", "$166,347", "$197,920", "$136,693"]
+      ]
+    },
+    {
+      "title": "Pre-Money Valuation",
+      "description": "Company valuation calculated using the Venture Capital Method",
+      "headers": ["Metric", "Value"],
+      "rows": [
+        ["Projected Revenue Year 5", "$4,016,250.00"],
+        ["Projected Margin Year 5", "20.17%"],
+        ["Industry P/E", "14.07"],
+        ["Terminal Value", "$11,397,113.52"],
+        ["ROI", "49.16%"],
+        ["Investment Amount", "$750,000.00"],
+        ["Pre-Money Valuation", "$22,434,761.68"]
+      ]
+    }
+  ],
+  "notes": [
+    "* 2023 figures starting from August 1",
+    "Financial projections for luxury exotic car rental business",
+    "All amounts in USD",
+    "Depreciation calculated using Sum of Years Digits (SYOD) method",
+    "Pre-money valuation based on Venture Capital Method using Year 5 projections"
+  ]
+}

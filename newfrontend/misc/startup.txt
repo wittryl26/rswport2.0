@@ -1,0 +1,30 @@
+## Project Structure Note:
+This portfolio project uses a split structure:
+- Frontend: /c:/rswportfolio (this directory)
+- Backend: /c:/portfolio-fred/fred-api (separate directory)
+
+1. Start the backend first:
+   - Navigate to /c:/portfolio-fred/fred-api
+   - Make sure your PostgreSQL database is running
+     (See database-guide.md in the fred-api folder for instructions)
+   - Run: npm start
+   
+2. Open the frontend:
+   - Use a local server like Live Server in VS Code
+   - Or use Python's built-in server: 
+     python -m http.server
+   - Navigate to http://localhost:8000 (or the port provided)
+   
+3. Verify:
+   - Your portfolio page should load with 6 cards
+   - Static images should display properly
+   - The PDF should be embedded in the iframe
+   - Chart cards should load data from the API
+   
+4. Troubleshooting:
+   - Check browser console for errors
+   - Verify API is running at http://localhost:3000
+   - Test API endpoints directly: 
+     - http://localhost:3000/econ-data
+     - http://localhost:3000/trello
+     - http://localhost:3000/financial

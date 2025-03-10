@@ -1,0 +1,140 @@
+/**
+ * Financial Tabs CSS
+ * Fix issues with tab display and visibility
+ */
+
+/* Tab container styles */
+.financial-tabs {
+    margin-bottom: 32px;
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+}
+
+/* Tab button container */
+.financial-tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1px; /* Added to ensure the bottom border is visible */
+}
+
+/* Individual tab button */
+.financial-tab-button {
+    position: relative;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: var(--text-secondary, #a0a0a0);
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    z-index: 1; /* Fix for potential stacking issues */
+}
+
+/* Tab button hover effect */
+.financial-tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-primary, #64ffda);
+    transition: all 0.3s ease;
+}
+
+.financial-tab-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #ffffff);
+}
+
+.financial-tab-button:hover::after {
+    width: 80%;
+    left: 10%;
+}
+
+/* Active tab styling */
+.financial-tab-button.active {
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--accent-primary, #64ffda);
+    border-bottom: 2px solid var(--accent-primary, #64ffda);
+}
+
+.financial-tab-button.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-primary, #64ffda);
+}
+
+.financial-tab-button.active::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Tab content container - CRITICAL FIX */
+.financial-tab-content {
+    position: relative;
+    min-height: 300px; /* Ensure there's space for content */
+}
+
+/* Tab transition animations - IMPROVED VISIBILITY */
+.financial-tab-pane {
+    display: none; /* Hide by default */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative; /* Ensure proper positioning */
+}
+
+.financial-tab-pane.active {
+    display: block; /* Show when active */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fix for collapsed sections */
+.subsection-content.collapsed {
+    display: none !important; /* Ensure it's hidden */
+}
+
+/* Improved styling for mobile */
+@media (max-width: 768px) {
+    .financial-tab-buttons {
+        justify-content: flex-start; /* Changed from center */
+        overflow-x: auto; /* Allow horizontal scrolling for many tabs */
+        padding-bottom: 5px;
+    }
+  
+    .financial-tab-button {
+        flex: 0 0 auto; /* Don't grow or shrink */
+        white-space: nowrap; /* Prevent text wrapping */
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Print optimizations */
+@media print {
+    .financial-tab-content {
+        display: block;
+    }
+  
+    .financial-tab-pane {
+        display: block !important; /* Show all tabs when printing */
+        opacity: 1;
+        transform: none;
+        page-break-before: always;
+    }
+  
+    .financial-tab-pane:first-child {
+        page-break-before: auto;
+    }
+}

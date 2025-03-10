@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2023-01-01",
+    "actual": 102.35,
+    "predicted": 103.31,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-02-01",
+    "actual": 103.6,
+    "predicted": 101.18,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-03-04",
+    "actual": 105.83,
+    "predicted": 104.26,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-03-31",
+    "actual": 105.7,
+    "predicted": 105.63,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-05-01",
+    "actual": 109.09,
+    "predicted": 107.47,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-05-31",
+    "actual": 108.82,
+    "predicted": 108.42,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-07-01",
+    "actual": 112.15,
+    "predicted": 113.16,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-07-31",
+    "actual": 116.27,
+    "predicted": 116.52,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-08-31",
+    "actual": 122.05,
+    "predicted": 123,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-10-01",
+    "actual": 127.45,
+    "predicted": 126.22,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-10-31",
+    "actual": 131.16,
+    "predicted": 133.39,
+    "indicator": "Market Index"
+  },
+  {
+    "date": "2023-12-02",
+    "actual": 132.53,
+    "predicted": 132.55,
+    "indicator": "Market Index"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "projects": [
+    {
+      "name": "Cloud Migration",
+      "phases": [
+        {"name": "Planning", "risk": 0.2, "resources": 3, "duration": 14, "bottleneckRisk": "Low"},
+        {"name": "Development", "risk": 0.7, "resources": 5, "duration": 45, "bottleneckRisk": "High"},
+        {"name": "Testing", "risk": 0.5, "resources": 4, "duration": 21, "bottleneckRisk": "Medium"},
+        {"name": "Deployment", "risk": 0.3, "resources": 6, "duration": 10, "bottleneckRisk": "Low"}
+      ],
+      "riskFactors": ["Resource availability", "Technical complexity", "Integration dependencies"]
+    },
+    {
+      "name": "CRM Implementation",
+      "phases": [
+        {"name": "Requirements", "risk": 0.4, "resources": 4, "duration": 21, "bottleneckRisk": "Medium"},
+        {"name": "Configuration", "risk": 0.6, "resources": 3, "duration": 30, "bottleneckRisk": "High"},
+        {"name": "Data Migration", "risk": 0.8, "resources": 3, "duration": 28, "bottleneckRisk": "Critical"},
+        {"name": "Training", "risk": 0.3, "resources": 2, "duration": 14, "bottleneckRisk": "Low"}
+      ],
+      "riskFactors": ["Data quality", "Stakeholder availability", "Change management"]
+    },
+    {
+      "name": "Mobile App Development",
+      "phases": [
+        {"name": "Design", "risk": 0.3, "resources": 3, "duration": 14, "bottleneckRisk": "Low"},
+        {"name": "Development", "risk": 0.5, "resources": 6, "duration": 42, "bottleneckRisk": "Medium"},
+        {"name": "QA Testing", "risk": 0.6, "resources": 4, "duration": 21, "bottleneckRisk": "High"},
+        {"name": "App Store Approval", "risk": 0.7, "resources": 1, "duration": 14, "bottleneckRisk": "High"}
+      ],
+      "riskFactors": ["Third-party dependencies", "Technology constraints", "User acceptance"]
+    }
+  ],
+  "resources": [
+    {"name": "Frontend Developers", "allocation": 0.85, "bottleneckRisk": "High"},
+    {"name": "Backend Developers", "allocation": 0.75, "bottleneckRisk": "Medium"},
+    {"name": "QA Engineers", "allocation": 0.9, "bottleneckRisk": "Critical"},
+    {"name": "DevOps", "allocation": 0.65, "bottleneckRisk": "Medium"},
+    {"name": "Project Managers", "allocation": 0.7, "bottleneckRisk": "Medium"}
+  ],
+  "riskMatrix": {
+    "high": [
+      "QA Testing capacity",
+      "Data migration complexity",
+      "Integration points",
+      "App Store submission timeline"
+    ],
+    "medium": [
+      "Resource availability",
+      "Technical expertise gaps",
+      "Vendor dependencies",
+      "Requirements clarity"
+    ],
+    "low": [
+      "Budget constraints",
+      "Scope definition",
+      "Stakeholder approval",
+      "Environment setup"
+    ]
+  }
+}

@@ -1,0 +1,208 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000000; /* Dark background */
+    font-family: 'IBM Plex Mono', monospace; /* Local IBM Plex Mono */
+    color: #FFFFFF; /* White text */
+}
+
+/* Header Styles */
+header {
+    background-color: #000000; /* Black background for header */
+    width: 100%;
+}
+
+.banner {
+    background-color: #2e0000; /* Dark red banner */
+    color: #FFFFFF; /* White text */
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.logo {
+    color: #FFFFFF; /* White text */
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logo .icon {
+    width: 12px;
+    height: 12px;
+    background-color: #FFFFFF; /* White icon */
+    margin-right: 8px;
+}
+
+/* Hero Section Styles */
+#hero {
+    height: 50vh; /* Compact hero height */
+    width: 100%;
+    background-color: #000000; /* Black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.photo-column {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* No box on left photo */
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional polish */
+}
+
+.text-column {
+    width: 50%;
+    background-color: #222222; /* Dark box for text */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.text-column h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #FFFFFF; /* White text */
+}
+
+.text-column h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    color: #FFFFFF; /* White text */
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.text-column p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #FFFFFF; /* White text */
+}
+
+/* Expertise Section Styles */
+#expertise {
+    padding: 40px;
+    text-align: center;
+}
+
+#expertise h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #FFFFFF; /* White text */
+}
+
+.expertise-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.expertise-card {
+    background-color: #222222; /* Dark gray cards */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.expertise-card img, .expertise-card iframe, .expertise-card canvas {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.expertise-card iframe, .expertise-card canvas {
+    height: 300px; /* Standard height for charts and embeds */
+    border: none;
+}
+
+.expertise-card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF; /* White text */
+    margin-bottom: 10px;
+}
+
+.expertise-card p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    color: #CCCCCC; /* Light gray for descriptions */
+    margin-bottom: 10px;
+}
+
+.expertise-card .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: #CCCCCC; /* Light gray for labels */
+    font-style: italic;
+}
+
+/* FRED and Asana Chart Styling */
+.fred-chart, #asanaChart {
+    width: 100% !important;
+    height: 300px !important;
+    background-color: transparent; /* No background behind chart, just the card's dark gray */
+}
+
+/* Ensure Chart.js canvas takes full width and height */
+.expertise-card canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #hero {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .photo-column, .text-column {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .text-column {
+        background-color: #222222;
+        text-align: center;
+    }
+
+    .expertise-card {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .fred-chart, #asanaChart {
+        height: 200px !important; /* Smaller on mobile */
+    }
+}

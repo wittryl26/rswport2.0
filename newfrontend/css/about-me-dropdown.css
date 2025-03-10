@@ -1,0 +1,148 @@
+/**
+ * About Me Dropdown CSS
+ * Minimalistic, wider dropdown for personal information with subtle effects
+ */
+
+/* Reposition the dropdown container to be part of the main navigation */
+.about-me-container {
+    position: static; /* Change from absolute to static positioning */
+    width: auto; /* Let it size naturally */
+    display: inline-block; /* Align with other nav items */
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+}
+
+/* Make the toggle button match the navigation style */
+.about-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+    transition: all 0.3s ease;
+    color: var(--text-primary, #ffffff);
+}
+
+.about-toggle-text {
+    font-size: 16px; /* Larger text */
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.about-toggle i {
+    font-size: 16px;
+    color: var(--accent-primary, #64ffda);
+    transition: transform 0.3s ease;
+}
+
+/* Subtle glow effect only on hover */
+.about-toggle:hover {
+    color: var(--accent-primary, #64ffda);
+    text-shadow: 0 0 8px rgba(100, 255, 219, 0.178);
+}
+
+.about-toggle:hover i {
+    text-shadow: 0 0 12px rgba(100, 255, 218, 0.5);
+}
+
+/* Position the dropdown below the button */
+.about-dropdown {
+    position: absolute;
+    top: 70px; /* Position below the nav bar */
+    right: 30px; /* Align to the right side */
+    width: 500px;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.233);
+    backdrop-filter: blur(12px);
+    border-radius: 2px;
+    border: none;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.123);
+    transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.4s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+    z-index: 50;
+}
+
+/* Active state for dropdown */
+.about-dropdown.active {
+    max-height: calc(100vh - 150px);
+    opacity: 1;
+    transform: translateY(0);
+    overflow-y: auto;
+}
+
+/* Updated content styling - more space without the heading */
+.about-content {
+    padding: 30px; /* More padding for a spacious feel */
+    color: var(--text-primary, #ffffff);
+}
+
+/* Make profile image center focus */
+.profile-picture-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    object-fit: cover;
+    border: 1px solid rgba(100, 255, 218, 0.3); /* Very subtle border */
+    box-shadow: 0 0 30px rgba(100, 255, 219, 0.11); /* Subtle glow */
+}
+
+/* Remove heading and simplify text styling */
+.about-me-text {
+    color: var(--text-secondary, #a0a0a0);
+}
+
+/* Remove the h3 styling since we're not using it */
+.about-me-text h3 {
+    display: none; /* Hide the heading completely */
+}
+
+.about-me-text p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: var(--text-secondary, #a0a0a0);
+}
+
+/* First paragraph slightly emphasized without needing a heading */
+.about-me-text p:first-of-type {
+    color: var(--text-primary, #ffffff);
+    font-size: 1rem;
+    margin-bottom: 22px;
+}
+
+/* When dropdown is active, rotate the chevron */
+.about-toggle.active i {
+    transform: rotate(180deg);
+}
+
+/* Ultra-minimal scrollbar */
+.about-dropdown::-webkit-scrollbar {
+    width: 3px; /* Thinner scrollbar */
+}
+
+.about-dropdown::-webkit-scrollbar-track {
+    background: transparent; /* Invisible track */
+}
+
+.about-dropdown::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 255, 218, 0.15);
+    border-radius: 3px;
+}
+
+/* Media query for mobile adjustments */
+@media (max-width: 768px) {
+    .about-me-container {
+        width: calc(100% - 40px);
+        right: 20px;
+    }
+}

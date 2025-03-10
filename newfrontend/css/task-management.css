@@ -1,0 +1,278 @@
+/**
+ * Task Management Styles
+ * Styling for the interactive task component that affects bottleneck predictor
+ */
+
+.task-manager {
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+    background-color: rgba(25, 25, 30, 0.7); /* Slightly darker and more transparent */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid rgba(100, 255, 218, 0.1); /* Subtle accent border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Add depth */
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.15); /* Accent color for border */
+    padding-bottom: 12px;
+}
+
+.task-header h4 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--accent-primary, #64ffda);
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3); /* Subtle glow effect */
+}
+
+.task-filters {
+    display: flex;
+    gap: 10px;
+}
+
+.task-filters select {
+    padding: 6px 10px;
+    background-color: rgba(25, 25, 30, 0.8); /* Darker background */
+    border: 1px solid rgba(100, 255, 218, 0.2); /* Match accent color */
+    border-radius: 4px;
+    color: var(--text-primary, #ffffff);
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.task-filters select:hover, .task-filters select:focus {
+    border-color: rgba(100, 255, 218, 0.4);
+    box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.1);
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 4px;
+    margin-bottom: 16px;
+}
+
+.task-item {
+    display: flex;
+    background-color: rgba(30, 30, 35, 0.5); /* Darker with transparency */
+    border-radius: 6px;
+    padding: 12px;
+    position: relative;
+    transition: all 0.25s ease;
+    border-left: 3px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgba(35, 35, 40, 0.6);
+}
+
+.task-item.assigned-to-you {
+    border-left-color: var(--accent-primary, #64ffda);
+    background-color: rgba(100, 255, 218, 0.05);
+}
+
+.task-item.updated {
+    background-color: rgba(100, 255, 218, 0.15);
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+}
+
+.task-status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 12px;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+.task-status-indicator.not-started {
+    background-color: #607D8B; /* Blue grey, more muted */
+}
+
+.task-status-indicator.in-progress {
+    background-color: #5CCEEE; /* Bright blue that fits theme */
+}
+
+.task-status-indicator.blocked {
+    background-color: #FF5252; /* Vibrant red */
+}
+
+.task-status-indicator.completed {
+    background-color: #64ffda; /* Match site accent color */
+}
+
+.task-details {
+    flex-grow: 1;
+    margin-right: 14px;
+}
+
+.task-title {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-primary, #ffffff);
+}
+
+.task-meta, .task-assignment {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary, #a0a0a0);
+    margin-top: 4px;
+}
+
+.task-project {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 70%;
+}
+
+.task-due-date {
+    white-space: nowrap;
+}
+
+.task-due-date.overdue {
+    color: #FF5252;
+    font-weight: 500;
+}
+
+.task-actions {
+    align-self: center;
+}
+
+.task-status-select {
+    padding: 6px;
+    background-color: rgba(25, 25, 30, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.15);
+    border-radius: 4px;
+    color: var(--text-primary, #ffffff);
+    font-family: var(--font-code, 'IBM Plex Mono', monospace);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.task-status-select:hover, .task-status-select:focus {
+    border-color: rgba(100, 255, 218, 0.4);
+}
+
+.bottleneck-impact {
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.bottleneck-impact.high {
+    background-color: rgba(255, 82, 82, 0.2);
+    color: #FF5252; /* Vibrant red */
+}
+
+.bottleneck-impact.medium {
+    background-color: rgba(255, 215, 0, 0.15);
+    color: #FFD700; /* Gold */
+}
+
+.bottleneck-impact.low {
+    background-color: rgba(100, 255, 218, 0.15);
+    color: #64ffda; /* Match site accent color */
+}
+
+.bottleneck-impact.minimal {
+    background-color: rgba(149, 165, 166, 0.1);
+    color: #BDC3C7; /* Light grey */
+}
+
+.task-info {
+    padding: 8px 4px;
+    border-top: 1px solid rgba(100, 255, 218, 0.05);
+    color: rgba(180, 180, 180, 0.7);
+    font-size: 12px;
+    text-align: center;
+}
+
+.no-tasks {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-secondary, #a0a0a0);
+    font-style: italic;
+}
+
+/* Custom scrollbar */
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 255, 218, 0.2);
+    border-radius: 3px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 255, 218, 0.4);
+}
+
+/* Animation for updates */
+@keyframes highlight-update {
+    0% {
+        background-color: rgba(100, 255, 218, 0.05);
+    }
+    50% {
+        background-color: rgba(100, 255, 218, 0.25);
+        box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    }
+    100% {
+        background-color: rgba(100, 255, 218, 0.05);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .task-filters {
+        width: 100%;
+    }
+    
+    .task-filters select {
+        flex: 1;
+    }
+    
+    .task-item {
+        flex-direction: column;
+    }
+    
+    .task-status-indicator {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+    
+    .task-actions {
+        width: 100%;
+        margin-top: 12px;
+    }
+    
+    .task-status-select {
+        width: 100%;
+    }
+}

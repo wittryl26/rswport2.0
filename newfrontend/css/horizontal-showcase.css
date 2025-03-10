@@ -1,0 +1,292 @@
+/* Horizontal showcase styling */
+
+.horizontal-showcase {
+  background: transparent; /* Remove any background */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-family: var(--font-main);
+}
+
+/* Header styles */
+.showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0; /* Removed horizontal padding */
+  background-color: transparent; /* No background */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Very subtle separator */
+  margin-bottom: 1.5rem;
+}
+
+.showcase-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.showcase-metadata {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  align-items: center;
+}
+
+.showcase-author {
+  color: #FFFFFF; /* Pure white */
+  position: relative;
+}
+
+.showcase-author::after {
+  content: '•';
+  position: absolute;
+  right: -0.75rem;
+  opacity: 0.5;
+}
+
+.showcase-date {
+  opacity: 0.7;
+  font-family: var(--font-code);
+}
+
+/* Content area styles - remove scrolling functionality */
+.showcase-content {
+  flex: 1;
+  position: relative;
+  margin-bottom: 1rem;
+  overflow: visible; /* Changed from overflow-y: auto to remove scrollbars */
+}
+
+.showcase-sections-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.showcase-section {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 0; /* No horizontal padding for cleaner look */
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease; /* Smoother fade transition */
+  display: none;
+  flex-direction: column;
+  overflow: visible; /* Changed from overflow-y: auto to remove scrollbars */
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.showcase-section.active {
+  display: block;
+  opacity: 1;
+  z-index: 10;
+}
+
+.showcase-section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent-primary);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.75rem; /* Space for underline */
+}
+
+.showcase-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 1px; /* Thinner line */
+  background: rgba(212, 54, 74, 0.8); /* Slightly transparent burgundy */
+}
+
+.showcase-section-content {
+  line-height: 1.7;
+  color: var(--text-secondary);
+  font-size: 1.05rem; /* Slightly larger for better readability */
+  letter-spacing: 0.01em; /* Slight letter spacing for readability */
+}
+
+.showcase-section-content p {
+  margin-bottom: 1.25em;
+}
+
+/* Controls styles */
+.showcase-controls {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+}
+
+.showcase-nav-button {
+  background: rgba(100, 255, 218, 0.1);
+  color: var(--accent-primary);
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.showcase-nav-button:hover {
+  background: rgba(100, 255, 218, 0.2);
+}
+
+.showcase-nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.showcase-indicators {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.showcase-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.showcase-indicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.showcase-indicator.active {
+  background: var(--accent-primary);
+}
+
+/* Loading state */
+.showcase-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; /* No background */
+}
+
+.showcase-loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid #FFFFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.showcase-loading-text {
+  color: #FFFFFF; /* Pure white */
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+}
+
+/* Error state */
+.showcase-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; /* No background */
+  padding: 2rem;
+  text-align: center;
+}
+
+.showcase-error-icon {
+  color: var(--accent-burgundy);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.showcase-error-text {
+  color: #FFFFFF; /* Pure white */
+}
+
+.showcase-error-details {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-family: var(--font-code);
+  margin-top: 0.5rem;
+}
+
+/* Remove custom scrollbar styles since they're no longer needed */
+/* Delete or comment out these styles:
+.showcase-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.showcase-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.showcase-content::-webkit-scrollbar-thumb {
+  background: rgba(100, 255, 218, 0.3);
+  border-radius: 3px;
+}
+
+.showcase-content::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+*/
+
+/* Fade animation for section transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .showcase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .showcase-title {
+    font-size: 1.25rem;
+  }
+  
+  .showcase-section-title {
+    font-size: 1.25rem;
+  }
+}

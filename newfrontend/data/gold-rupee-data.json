@@ -1,0 +1,124 @@
+{
+  "data": [
+    {
+      "date": "2024-01-01",
+      "gold_price": 2051.87,
+      "rupee_rate": 83.25
+    },
+    {
+      "date": "2024-01-15",
+      "gold_price": 2055.42,
+      "rupee_rate": 83.12
+    },
+    {
+      "date": "2024-02-01",
+      "gold_price": 2071.35,
+      "rupee_rate": 83.49
+    },
+    {
+      "date": "2024-02-15",
+      "gold_price": 2038.67,
+      "rupee_rate": 82.95
+    },
+    {
+      "date": "2024-03-01",
+      "gold_price": 2074.23,
+      "rupee_rate": 82.78
+    },
+    {
+      "date": "2024-03-15",
+      "gold_price": 2156.18,
+      "rupee_rate": 83.12
+    },
+    {
+      "date": "2024-04-01",
+      "gold_price": 2238.59,
+      "rupee_rate": 83.67
+    },
+    {
+      "date": "2024-04-15",
+      "gold_price": 2384.22,
+      "rupee_rate": 83.95
+    },
+    {
+      "date": "2024-05-01",
+      "gold_price": 2289.49,
+      "rupee_rate": 84.21
+    },
+    {
+      "date": "2024-05-15",
+      "gold_price": 2308.71,
+      "rupee_rate": 84.45
+    },
+    {
+      "date": "2024-06-01",
+      "gold_price": 2321.05,
+      "rupee_rate": 84.59
+    },
+    {
+      "date": "2024-06-15",
+      "gold_price": 2342.18,
+      "rupee_rate": 84.72
+    },
+    {
+      "date": "2024-07-01",
+      "gold_price": 2385.73,
+      "rupee_rate": 84.89
+    },
+    {
+      "date": "2024-07-15",
+      "gold_price": 2401.46,
+      "rupee_rate": 84.95
+    },
+    {
+      "date": "2024-08-01",
+      "gold_price": 2435.28,
+      "rupee_rate": 85.13
+    },
+    {
+      "date": "2024-08-15",
+      "gold_price": 2489.75,
+      "rupee_rate": 85.26
+    },
+    {
+      "date": "2024-09-01",
+      "gold_price": 2505.92,
+      "rupee_rate": 85.42
+    },
+    {
+      "date": "2024-09-15",
+      "gold_price": 2528.47,
+      "rupee_rate": 85.67
+    },
+    {
+      "date": "2024-10-01",
+      "gold_price": 2569.31,
+      "rupee_rate": 85.78
+    },
+    {
+      "date": "2024-10-15",
+      "gold_price": 2595.68,
+      "rupee_rate": 85.91
+    },
+    {
+      "date": "2024-11-01",
+      "gold_price": 2625.42,
+      "rupee_rate": 85.85
+    },
+    {
+      "date": "2024-11-15",
+      "gold_price": 2638.79,
+      "rupee_rate": 85.72
+    },
+    {
+      "date": "2024-12-01",
+      "gold_price": 2651.13,
+      "rupee_rate": 85.59
+    },
+    {
+      "date": "2024-12-15",
+      "gold_price": 2663.45,
+      "rupee_rate": 85.43
+    }
+  ]
+}

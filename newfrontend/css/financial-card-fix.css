@@ -1,0 +1,64 @@
+/* Fix for financial card layout issues */
+
+/* Ensure the card has good spacing */
+.card {
+  position: relative;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: visible !important; /* Critical fix for the black box issue */
+}
+
+/* Fix for images that might cause black box issues */
+.card img[src*="placeholder"] {
+  display: none !important;
+}
+
+/* Fix Financial Risk Analysis card styling - use standard CSS selectors */
+.card .card-title {
+  margin-top: 1.5rem !important; 
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix any other title that might have spacing issues */
+.card-content h3 {
+  clear: both;
+  position: relative;
+  z-index: 1;
+}
+
+/* Financial spreadsheet container */ 
+.financial-spreadsheet {
+  min-height: 400px;
+  margin: 1.5rem 0;
+  position: relative;
+  background-color: rgba(22, 22, 22, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Loading indicator for financial data */
+.financial-spreadsheet:empty::before {
+  content: "Loading financial data...";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-family: var(--font-code, 'IBM Plex Mono', monospace);
+  height: 100%;
+  width: 100%;
+}
+
+/* Fix black background issues in any element */
+[style*="background-color: #000"],
+[style*="background-color: black"],
+[style*="background-color: rgb(0, 0, 0)"] {
+  background-color: transparent !important;
+}
+
+/* Remove non-standard CSS */
+/* @media screen {
+  .card-title:contains("Financial Risk Analysis") {
+    margin-top: 1.5rem;
+  }
+} */
