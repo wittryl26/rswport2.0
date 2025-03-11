@@ -10,7 +10,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="js/direct-chart.js"></script>
+    <!-- Remove all other chart scripts -->
+    <!-- <script src="js/direct-chart.js"></script> -->
+    <!-- <script src="js/chart-loading-fix.js"></script> -->
+    
+    <!-- Add the proven fix script -->
+    <script src="js/fix-gold-chart.js"></script>
+    
     <script>
         // Verify Chart.js is loaded
         window.addEventListener('load', function() {
@@ -23,9 +29,6 @@
     </script>
     <!-- Add this right before loading the chart-customization.js script -->
     <script src="js/fallback-data.js"></script>
-    
-    <!-- Add the chart loading fix right after Chart.js but before other chart scripts -->
-    <script src="js/chart-loading-fix.js"></script>
     
     <script src="js/chart-customization.js"></script>
     
