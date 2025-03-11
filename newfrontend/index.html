@@ -134,14 +134,20 @@
         </section>
         <div class="loading-indicator" id="loading">Loading more projects...</div>
         
-        <!-- Remove this duplicate chart container -->
-        <!-- <div id="gold-rupee-chart" class="chart-container">
+        <!-- UNCOMMENT THIS: Add chart container back in - it was commented out earlier -->
+        <div id="gold-rupee-chart" class="chart-container">
+            <!-- This initialization script is critical -->
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    loadGoldRupeeChart('gold-rupee-chart');
+                    console.log("Initializing gold-rupee chart");
+                    if (typeof loadGoldRupeeChart === 'function') {
+                        loadGoldRupeeChart('gold-rupee-chart');
+                    } else {
+                        console.error("loadGoldRupeeChart function not found!");
+                    }
                 });
             </script>
-        </div> -->
+        </div>
     </main>
     
     <!-- Update the footer section -->
