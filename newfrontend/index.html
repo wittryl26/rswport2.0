@@ -1,40 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ryland Wittman</title>
-  <style>
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-      line-height: 1.6; 
-      color: #333; 
-      max-width: 800px; 
-      margin: 40px auto; 
-      padding: 0 20px; 
-    }
-    h1 { color: #2c3e50; }
-    .placeholder { 
-      background-color: #f8f9fa; 
-      border-radius: 5px; 
-      padding: 20px; 
-      margin: 20px 0; 
-      border-left: 5px solid #007bff; 
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link rel="stylesheet" href="css/modern-styles.css">
+    <link rel="stylesheet" href="css/pdf-viewer.css">
+    <link rel="stylesheet" href="css/horizontal-showcase.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        // Verify Chart.js is loaded
+        window.addEventListener('load', function() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js failed to load!');
+            } else {
+                console.log('Chart.js loaded successfully.');
+            }
+        });
+    </script>
+    <!-- Add this right before loading the chart-customization.js script -->
+    <script src="js/fallback-data.js"></script>
+    <script src="js/chart-customization.js"></script>
+    
+    <!-- Add the API configuration script in the head -->
+    <script src="js/api-config.js"></script>
+    
+    <!-- Console logging for debugging -->
+    <script>
+        console.log('Page loading...');
+        window.addEventListener('load', function() {
+            console.log('Window loaded, API status element:', document.getElementById('api-status'));
+        });
+        
+        // Report any uncaught errors
+        window.addEventListener('error', function(e) {
+            console.error('Uncaught error:', e.error);
+        });
+    </script>
+    <!-- Remove the finance animation CSS reference -->
+    <!-- <link rel="stylesheet" href="css/finance-animation.css"> -->
+    <!-- Add the financial spreadsheet CSS link in the head section -->
+    <link rel="stylesheet" href="css/financial-spreadsheet.css">
+    <link rel="stylesheet" href="css/financial-card-fix.css">
+    <link rel="stylesheet" href="css/financial-tabs.css">
+    <link rel="stylesheet" href="css/bottleneck-predictor.css">
+    <link rel="stylesheet" href="css/task-management.css">
+    <link rel="stylesheet" href="css/portfolio-architecture.css">
+    <link rel="stylesheet" href="css/scroll-indicator.css"> <!-- Add this new line -->
+    <link rel="stylesheet" href="css/about-me-dropdown.css">
 </head>
 <body>
-  <h1>Ryland Wittman</h1>
-  <div class="placeholder">
-    <p>Portfolio site loading...</p>
-    <p>If you continue to see this message, the application may still be deploying.</p>
-  </div>
-  
-  <!-- No redirects, no refresh meta tags, no problematic scripts -->
-  
-  <script>
-    // Safe script - just logging to console, no redirects
-    console.log('Page loaded successfully');
-  </script>
+    <!-- Update the navigation to include About Me link -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-contact">
+                <a href="mailto:rylandscottwittman@gmail.com">rylandscottwittman@gmail.com</a>
+                <span class="contact-separator">|</span>
+                <a href="tel:+18477143013">(847) 714-3013</a>
+                <span class="contact-separator">|</span>
+                <span class="location">Florida</span>
+                <span class="contact-separator">|</span>
+                <!-- Move the About Me button into the navigation -->
+                <div class="about-me-container">
+                    <div id="about-toggle" class="about-toggle" aria-expanded="false" aria-controls="about-dropdown">
+                        <span class="about-toggle-text">About Me</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- API status indicator with initial tooltip -->
+            <div id="api-status" class="api-status" title="Waiting to connect to API..."></div>
+        </div>
+    </nav>
+    
+    <!-- Keep the dropdown outside the nav container but remove the wrapping div -->
+    <div id="about-dropdown" class="about-dropdown">
+        <div class="about-content">
+            <div class="profile-picture-container">
+                <img src="static/images/profile-photo.jpg" alt="Ryland Wittman" class="profile-picture">
+            </div>
+            
+            <div class="about-me-text">
+                <p>I'm a flexible problem-solver, efficient in leadership and collaborative positions, with strong cross-functional skills.</p>
+                <p>With experience spanning financial services, business operations, and technology sectors, I specialize in planning and managing solutions that bridge analytical thinking with creative implementation.</p>
+                <p>My approach combines strong logical reasoning, collaboration, and strategic planning.</p>
+                <p>When not building projects like this, I engage in many personal passions including film photography, music production, and golfing.</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <!-- Fixed alignment for consistent text positioning -->
+            <h1 class="fade-in">Ryland Wittman</h1>
+            <p class="subtitle fade-in delay-1">Professional Portfolio</p>
+            <p class="main-description fade-in delay-2">Please explore my work below, showcasing my diverse business & financial skillset, to see how I may be a valuable member of your team.</p>
+            <!-- Add resume button -->
+            <div class="hero-buttons fade-in delay-3">
+                <a href="resume.html" class="hero-button">
+                    <span class="button-icon"><i class="fas fa-file-alt"></i></span>
+                    <span class="button-text">View Resume</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Revert back to the original scroll indicator structure -->
+        <div class="scroll-indicator fade-in delay-3" id="projects-scroll">
+            <span class="scroll-text">Projects</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+        
+    <main class="container">
+        <section id="projects">
+            <!-- Projects heading is now in the scroll indicator -->
+            <div class="card-grid" id="card-container">
+                <!-- Cards will be dynamically loaded here -->
+            </div>
+        </section>
+        <div class="loading-indicator" id="loading">Loading more projects...</div>
+    </main>
+    
+    <!-- Update the footer section -->
+    <footer>
+        <!-- Remove social links section entirely -->
+        <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="#projects" class="footer-link">Projects</a>
+            <a href="resume.html" class="footer-link">Resume</a>
+        </div>
+        <p>&copy; 2025 Ryland Wittman. All rights reserved.</p>
+    </footer>
+
+    <!-- Remove the debug panel that's causing the black box -->
+    <!-- 
+    <div id="api-debug" style="position:fixed; bottom:10px; right:10px; background:rgba(0,0,0,0.85); color:white; padding:15px; border-radius:5px; font-family:monospace; font-size:12px; max-width:300px; z-index:1000;">
+        <strong>API Connection Status</strong>
+        <div id="api-debug-content" style="margin:10px 0; line-height:1.4;">
+            Waiting for data...
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button onclick="retryApiConnection()" style="background:#D4364A; border:none; color:white; padding:5px 10px; cursor:pointer; flex-grow:1;">Retry API</button>
+            <button onclick="activateSampleData()" style="background:#333; border:none; color:white; padding:5px 10px; cursor:pointer; flex-grow:1;">Use Sample Data</button>
+            <button id="reload-charts" style="background:#7928ca; border:none; color:white; padding:5px 10px; cursor:pointer; flex-grow:1;">Reload Charts</button>
+            <button onclick="toggleDebugPanel()" style="background:#555; border:none; color:white; padding:5px 10px; cursor:pointer; flex-grow:0;">Hide</button>
+        </div>
+    </div>
+    -->
+    
+    <!-- Load scripts in the correct order -->
+    <script src="js/api-service.js"></script>
+    <script src="js/sample-data-loader.js"></script>
+    <script src="js/bottleneck-data-service.js"></script>
+    <script src="js/task-management.js"></script>
+    <script src="js/chart-customization.js"></script>
+    <script src="js/pdf-viewer.js"></script>
+    <script src="js/horizontal-showcase.js"></script>
+    <script src="js/modern-main.js"></script>
+    <script src="js/single-chart-loader.js"></script>
+    <script src="js/hero-animation.js"></script>
+    <script src="js/portfolio-architecture.js"></script>
+
+    <!-- Financial model scripts -->
+    <script src="js/html-financial-model.js"></script>
+    <script src="js/create-project-cards.js"></script>
+    <script src="js/debug-control.js"></script>
+    <script src="js/about-me-dropdown.js"></script>
+
 </body>
 </html>

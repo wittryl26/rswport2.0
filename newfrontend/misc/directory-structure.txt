@@ -1,0 +1,14 @@
+rswportfolio/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── main.js
+│   ├── charts.js
+│   └── infiniteScroll.js
+├── assets/
+│   ├── workflow-app-screenshot.jpg  (generated from generate-placeholders.html)
+│   ├── debt-graph.jpg               (generated from generate-placeholders.html)
+│   └── market-analysis.pdf          (generated from generate-placeholders.html)
+└── docs/                            (create this folder)
+    └── market-analysis.pdf          (copy from assets/ folder)

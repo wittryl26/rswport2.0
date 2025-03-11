@@ -19,29 +19,24 @@
     <h1>Deployment Debug Page</h1>
     
     <div class="status success">
-      <p>✅ If you can see this page, <strong>newfrontend/debug.html</strong> is being served correctly!</p>
+      <p>✅ If you can see this page, files are being served correctly from the newfrontend directory!</p>
     </div>
     
     <h2>Current Path:</h2>
     <pre id="current-path"></pre>
     
-    <h2>Environment:</h2>
-    <pre id="user-agent"></pre>
+    <div id="file-list" class="status">
+      <h3>Files successfully copied:</h3>
+      <p>Files from C:/rswportfolio/Frontend have been copied to newfrontend.</p>
+    </div>
     
     <h2>API Test:</h2>
     <div id="api-result" class="status">Testing API connection...</div>
-
-    <h2>Directory Structure:</h2>
-    <p>The deployment is configured to use the <strong>newfrontend</strong> directory for static files.</p>
-    <p>Any lingering references to <strong>Frontend</strong> directory will be redirected.</p>
   </div>
   
   <script>
     // Show current path
     document.getElementById('current-path').textContent = window.location.href;
-    
-    // Show user agent
-    document.getElementById('user-agent').textContent = navigator.userAgent;
     
     // Test API endpoint
     fetch('/api/health')
