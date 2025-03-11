@@ -2,10 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-
-// Serve static files from newfrontend directory
-app.use(express.static('./newfrontend'));
-
 const port = process.env.PORT || 3001;
 
 // Enable CORS for development - in production, you might want to restrict this
@@ -87,13 +83,6 @@ app.get('/gold-rupee', (req, res) => {
 
 
 // Start the server
-
-
-// Handle SPA - serve index.html for any unmatched route
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './newfrontend/index.html'));
-});
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);

@@ -50,6 +50,14 @@
     <link rel="stylesheet" href="css/portfolio-architecture.css">
     <link rel="stylesheet" href="css/scroll-indicator.css"> <!-- Add this new line -->
     <link rel="stylesheet" href="css/about-me-dropdown.css">
+    <style>
+    .showcase-section-title {
+        font-size: 1.6em;
+        margin-bottom: 15px;
+        color: var(--text-primary, #ffffff);
+        font-weight: 500;
+    }
+    </style>
 </head>
 <body>
     <!-- Update the navigation to include About Me link -->
@@ -121,6 +129,15 @@
             </div>
         </section>
         <div class="loading-indicator" id="loading">Loading more projects...</div>
+        
+        <!-- Remove this duplicate chart container -->
+        <!-- <div id="gold-rupee-chart" class="chart-container">
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    loadGoldRupeeChart('gold-rupee-chart');
+                });
+            </script>
+        </div> -->
     </main>
     
     <!-- Update the footer section -->

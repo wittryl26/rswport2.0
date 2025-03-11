@@ -1,0 +1,18 @@
+.nav-dropdown {
+    position: absolute;
+    top: 60px; /* Adjust based on your nav height */
+    right: 20px;
+    z-index: 9999;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.dropdown-content {
+    padding: 0.5rem 0;
+}

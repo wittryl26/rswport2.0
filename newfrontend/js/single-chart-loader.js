@@ -1,34 +1,38 @@
 // Ensures chart is initialized once and only once
 (function() {
     console.log("Single chart loader initialized");
-    
-    let chartInitialized = false;
-    
-    // Wait for page to fully load
-    window.addEventListener('load', function() {
-        // Don't interfere with the main script's initialization
-        setTimeout(ensureChartLoaded, 2000);
-    });
-    
-    function ensureChartLoaded() {
-        if (chartInitialized) return;
-        
-        const container = document.getElementById('gold-rupee-chart');
-        if (!container) {
-            console.error("Chart container not found");
+
+    function initializeChart(container) {
+        // Check if chart is already initialized
+        if (container.hasAttribute('data-chart-loaded')) {
+            console.log('Chart already loaded, skipping initialization');
             return;
         }
+
+        // Check if container has valid data
+        const chartType = container.getAttribute('data-chart-type');
+        if (!chartType) {
+            console.log('No chart type specified, skipping');
+            return;
+        }
+
+        console.log(`Initializing chart through single-chart-loader for type: ${chartType}`);
         
-        console.log("Initializing chart through single-chart-loader");
-        
-        // Remove any existing descriptions to prevent duplicates
-        document.querySelectorAll('[id$="-description"], [id^="gold-rupee-chart-description"]').forEach(el => el.remove());
-        
-        if (typeof window.createStandaloneGoldRupeeChart === 'function') {
-            window.createStandaloneGoldRupeeChart('gold-rupee-chart');
-            chartInitialized = true;
+        // Only initialize if it's not a gold-rupee chart (those are handled elsewhere)
+        if (chartType !== 'gold-rupee') {
+            window.customChartLoader?.initializeChart(container);
         } else {
-            console.error("Chart function not available");
+            console.log('Skipping gold-rupee chart as it is handled by main loader');
         }
     }
+
+    // Initialize any charts on the page
+    document.addEventListener('DOMContentLoaded', () => {
+        const chartContainers = document.querySelectorAll('.chart-container');
+        chartContainers.forEach(container => {
+            if (!container.hasAttribute('data-initialized')) {
+                initializeChart(container);
+            }
+        });
+    });
 })();

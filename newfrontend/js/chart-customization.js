@@ -17,6 +17,12 @@
             return;
         }
         
+        // Check if chart is already initialized
+        if (container.hasAttribute('data-initialized') || container.hasAttribute('data-chart-loaded')) {
+            console.log('Chart already initialized, skipping custom implementation');
+            return;
+        }
+
         // Check if we've already initialized this chart
         if (chartInitialized) {
             console.log("Chart already initialized, skipping");
@@ -80,6 +86,13 @@
     
     // Create the actual chart using Chart.js
     function createChart(canvas, data) {
+        // Check if we should skip this
+        const container = canvas.parentNode;
+        if (container && (container.hasAttribute('data-chart-loaded') || container.hasAttribute('data-initialized'))) {
+            console.log('Chart already initialized, skipping customization');
+            return;
+        }
+        
         // Extract the data
         const labels = data.data.map(d => {
             const date = new Date(d.date);
@@ -186,38 +199,51 @@
     function addDescription(containerId) {
         // Skip if we've already added a description
         if (descriptionAdded) {
-            return;
+            removeExistingDescriptions(); // Remove any stale descriptions first
         }
         
-        // Create single description
+        // Create description with more specific styling
         const chartDescription = document.createElement('div');
-        chartDescription.id = 'gold-rupee-chart-description';
+        chartDescription.id = 'gold-rupee-chart-description-' + containerId;
+        chartDescription.className = 'chart-description';
         chartDescription.style.cssText = `
             margin: 10px 0 30px 0;
-            font-size: 11px;
+            font-size: 14px;
             color: #a0a0a0;
-            line-height: 1.4;
+            line-height: 1.6;
             font-style: italic;
+            text-align: left;
+            padding: 10px;
+            border-left: 3px solid #FFD700;
+            background: rgba(255, 215, 0, 0.05);
         `;
+        
         chartDescription.innerHTML = `
             This chart visualization is powered by a custom Node.js API I built from scratch that fetches live gold price data and USD/INR exchange rates. 
             The data is processed through a serverless function using Express for routing and Chart.js for visualization, demonstrating full-stack development skills.
         `;
         
-        // Find the container and add the description after it
+        // Force description to appear by using direct parent reference
         const container = document.getElementById(containerId);
-        if (container) {
-            container.insertAdjacentElement('afterend', chartDescription);
-            // Set flag to prevent duplicate descriptions
+        if (container && container.parentNode) {
+            container.parentNode.insertBefore(chartDescription, container.nextSibling);
             descriptionAdded = true;
+            
+            // Add a small delay to ensure description is visible
+            setTimeout(() => {
+                chartDescription.style.opacity = '1';
+            }, 100);
         }
     }
     
     // Remove any existing descriptions
     function removeExistingDescriptions() {
-        // Find all elements that might be descriptions
-        const descriptions = document.querySelectorAll('[id$="-description"], [id^="gold-rupee-chart-description"]');
-        descriptions.forEach(el => el.remove());
+        const descriptions = document.querySelectorAll('[id^="gold-rupee-chart-description"]');
+        descriptions.forEach(el => {
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 100);
+        });
+        descriptionAdded = false;
     }
 
     // Export only what's needed

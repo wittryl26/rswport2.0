@@ -2,7 +2,7 @@
 (function() {
     // Default configuration
     const defaultConfig = {
-        baseUrl: 'http://localhost:3000', // Default API base URL
+        baseUrl: 'http://localhost:3001', // Default API base URL
         apiVersion: 'v1',
         timeout: 10000,
         retryCount: 3
@@ -13,8 +13,8 @@
         const host = window.location.hostname;
         // If we're serving from a local server like Live Server, 
         // we need to get the backend URL from the current page
-        if (window.location.port && window.location.port !== '3000') {
-            return `http://${host}:3000`;
+        if (window.location.port && window.location.port !== '3001') {
+            return `http://${host}:3001`;
         }
         return defaultConfig.baseUrl;
     }
@@ -78,7 +78,7 @@ const API_CONFIG = {
   baseUrl: 'https://your-api-url.onrender.com',
   
   // Fallback to localhost for development
-  localUrl: 'http://localhost:3000',
+  localUrl: 'http://localhost:3001',
   
   // Endpoints
   endpoints: {

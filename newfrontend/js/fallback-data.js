@@ -23,4 +23,27 @@
             lastUpdated: new Date().toISOString()
         }
     };
+
+    window.goldRupeeFallbackData = {
+        metadata: {
+            startDate: '2023-01-01',
+            endDate: '2023-12-31',
+            dataPoints: 12,
+            lastUpdated: new Date().toISOString()
+        },
+        data: [
+            { date: '2023-01-01', goldPrice: 1830.25, rupeeRate: 82.74 },
+            { date: '2023-02-01', goldPrice: 1859.75, rupeeRate: 82.95 },
+            { date: '2023-03-01', goldPrice: 1845.30, rupeeRate: 83.12 },
+            { date: '2023-04-01', goldPrice: 1982.10, rupeeRate: 82.53 },
+            { date: '2023-05-01', goldPrice: 2035.45, rupeeRate: 82.67 },
+            { date: '2023-06-01', goldPrice: 1976.40, rupeeRate: 83.30 },
+            { date: '2023-07-01', goldPrice: 1942.15, rupeeRate: 83.14 },
+            { date: '2023-08-01', goldPrice: 1994.80, rupeeRate: 83.23 },
+            { date: '2023-09-01', goldPrice: 1866.30, rupeeRate: 83.42 },
+            { date: '2023-10-01', goldPrice: 1985.60, rupeeRate: 83.36 },
+            { date: '2023-11-01', goldPrice: 2043.20, rupeeRate: 83.11 },
+            { date: '2023-12-01', goldPrice: 2078.40, rupeeRate: 83.18 }
+        ]
+    };
 })();

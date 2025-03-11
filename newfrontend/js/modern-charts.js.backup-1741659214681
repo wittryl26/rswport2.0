@@ -376,64 +376,67 @@ function createGoldRupeeChart(canvas, data) {
     console.log('Creating gold price and rupee chart with data:', data);
     
     try {
-        // Data validation with more detailed logging
-        if (!data || !data.data || !Array.isArray(data.data)) {
-            console.error('Invalid data structure:', data);
+        // Data validation
+        if (!data || !data.data || !Array.isArray(data.data) || data.data.length === 0) {
+            console.error('Invalid or empty gold-rupee data:', data);
+            showChartError(canvas.parentElement, 'Invalid or empty gold-rupee data');
             return;
         }
         
-        console.log(`Processing ${data.data.length} data points`);
+        // Process data for Chart.js format
+        const processedData = processGoldRupeeData(data.data);
         
-        // Ensure proper date filtering
+        // Ensure data covers 5-year range
         const now = new Date();
-        const fiveYearsAgo = new Date(now);
+        const fiveYearsAgo = new Date();
         fiveYearsAgo.setFullYear(now.getFullYear() - 5);
         
-        // Filter and sort data
-        const filteredData = data.data
-            .filter(item => new Date(item.date) >= fiveYearsAgo)
-            .sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-        console.log(`Filtered to ${filteredData.length} points within 5-year range`);
+        // Apply 5-year filter if we have dates
+        if (processedData.labels.length > 0) {
+          // Filter data points to last 5 years
+          const filteredIndices = processedData.labels.map((_, index) => index)
+            .filter(index => {
+              const date = new Date(data.data[index].date);
+              return date >= fiveYearsAgo;
+            });
+          
+          // Only keep data within 5-year range
+          processedData.labels = filteredIndices.map(i => processedData.labels[i]);
+          processedData.goldValues = filteredIndices.map(i => processedData.goldValues[i]);
+          processedData.rupeeValues = filteredIndices.map(i => processedData.rupeeValues[i]);
+        }
         
-        // Process data for chart
-        const chartData = {
-            labels: filteredData.map(item => new Date(item.date).toLocaleDateString('en-US', {
-                year: '2-digit',
-                month: 'short'
-            })),
-            goldValues: filteredData.map(item => parseFloat(item.goldPrice || item.gold_price || 0)),
-            rupeeValues: filteredData.map(item => parseFloat(item.rupeeRate || item.rupee_rate || 0))
-        };
-        
-        // Clear any existing chart
+        // If there's an existing chart on this canvas, destroy it
         if (canvas.chart) {
             canvas.chart.destroy();
         }
         
-        // Create new chart with updated configuration
-        const chart = new Chart(canvas, {
+        // Create the dual-axis chart with a specific ID
+        const goldRupeeChart = new Chart(canvas, {
             type: 'line',
             data: {
-                labels: chartData.labels,
+                labels: processedData.labels,
                 datasets: [
                     {
                         label: 'Gold Price (USD/oz)',
-                        data: chartData.goldValues,
-                        borderColor: '#D4A017',
+                        data: processedData.goldValues,
+                        borderColor: '#D4A017', // Gold color
                         backgroundColor: 'rgba(212, 160, 23, 0.1)',
                         borderWidth: 2,
                         tension: 0.3,
+                        pointRadius: 3,
                         yAxisID: 'y-gold',
                         fill: false
                     },
                     {
                         label: 'USD/INR Rate',
-                        data: chartData.rupeeValues,
-                        borderColor: '#2E8B57',
+                        data: processedData.rupeeValues,
+                        borderColor: '#2E8B57', // Indian flag green
                         backgroundColor: 'rgba(46, 139, 87, 0.1)',
                         borderWidth: 2,
+                        borderDash: [5, 5],
                         tension: 0.3,
+                        pointRadius: 3,
                         yAxisID: 'y-rupee',
                         fill: false
                     }
@@ -449,14 +452,40 @@ function createGoldRupeeChart(canvas, data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Gold Price vs USD/INR Exchange Rate (5 Year Trend)',
+                        text: 'Gold Price vs USD/INR Exchange Rate',
                         color: '#ffffff',
                         font: {
                             size: 16,
+                            family: "'IBM Plex Mono', monospace",
                             weight: 'normal'
                         }
                     },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    if (context.dataset.yAxisID === 'y-gold') {
+                                        label += new Intl.NumberFormat('en-US', { 
+                                            style: 'currency', 
+                                            currency: 'USD' 
+                                        }).format(context.parsed.y);
+                                    } else {
+                                        label += context.parsed.y.toFixed(2);
+                                    }
+                                }
+                                return label;
+                            }
+                        }
+                    },
                     legend: {
+                        display: true,
+                        position: 'top',
                         labels: {
                             color: '#ffffff'
                         }
@@ -470,29 +499,26 @@ function createGoldRupeeChart(canvas, data) {
                         ticks: {
                             color: '#a0a0a0',
                             maxRotation: 45,
-                            minRotation: 45,
-                            autoSkip: true,
-                            maxTicksLimit: 12,
-                            callback: function(val, index) {
-                                const date = new Date(filteredData[index]?.date);
-                                if (!isNaN(date.getTime())) {
-                                    return date.toLocaleDateString('en-US', {
-                                        year: '2-digit',
-                                        month: 'short'
-                                    });
-                                }
-                                return '';
-                            }
+                            minRotation: 45
+                        },
+                        title: {
+                            display: true,
+                            text: '2024',
+                            color: '#a0a0a0'
                         }
                     },
                     'y-gold': {
+                        type: 'linear',
+                        display: true,
                         position: 'left',
                         grid: {
                             color: 'rgba(255, 255, 255, 0.05)'
                         },
                         ticks: {
                             color: '#D4A017',
-                            callback: value => `$${value}`
+                            callback: function(value) {
+                                return '$' + value;
+                            }
                         },
                         title: {
                             display: true,
@@ -501,16 +527,18 @@ function createGoldRupeeChart(canvas, data) {
                         }
                     },
                     'y-rupee': {
+                        type: 'linear',
+                        display: true,
                         position: 'right',
                         grid: {
-                            drawOnChartArea: false
+                            drawOnChartArea: false, // Only show grid lines for the left axis
                         },
                         ticks: {
-                            color: '#2E8B57'
+                            color: '#2E8B57',
                         },
                         title: {
                             display: true,
-                            text: 'USD/INR Rate',
+                            text: 'USD/INR Exchange Rate',
                             color: '#2E8B57'
                         }
                     }
@@ -518,13 +546,17 @@ function createGoldRupeeChart(canvas, data) {
             }
         });
         
-        // Store chart reference
-        canvas.chart = chart;
+        // Save chart instance reference to canvas for later cleanup
+        canvas.chart = goldRupeeChart;
         
-        // Prevent fallback to sample data by marking as initialized
-        canvas.setAttribute('data-initialized', 'true');
+        // Also store in the parent container for future reference
+        canvas.parentElement._chart = goldRupeeChart;
         
-        return chart;
+        // Mark the container to prevent reinitialization
+        canvas.parentElement.setAttribute('data-chart-type', 'gold-rupee');
+        
+        console.log('Gold-rupee chart created successfully');
+        
     } catch (error) {
         console.error('Error creating gold-rupee chart:', error);
         showChartError(canvas.parentElement, error.message);
@@ -853,7 +885,7 @@ window.createStandaloneGoldRupeeChart = function(containerId) {
     `;
     
     // Use the correct absolute URL for the API
-    const apiUrl = '/api/gold-rupee';
+    const apiUrl = 'http://localhost:3001/gold-rupee';
     
     // Fetch the data from API endpoint
     fetch(apiUrl)
@@ -895,287 +927,27 @@ window.createStandaloneGoldRupeeChart = function(containerId) {
             container.setAttribute('data-chart-status', 'rendered');
         })
         .catch(error => {
-      console.error("Error fetching gold-rupee data:", error);
-      
-      // Use sample data as fallback
-      console.log("Using sample data fallback for gold-rupee chart");
-      
-      // Clear container and add canvas for the fallback data
-      container.innerHTML = '';
-      const canvas = document.createElement('canvas');
-      container.appendChild(canvas);
-      
-      // Try to get sample data from sampleDataProvider
-      if (window.sampleDataProvider && typeof window.sampleDataProvider.getGoldRupeeData === 'function') {
-        window.sampleDataProvider.getGoldRupeeData()
-          .then(fallbackData => {
-            console.log("Using sample data for gold-rupee chart");
-            createGoldRupeeChart(canvas, fallbackData);
+            console.error("Error fetching gold-rupee data:", error);
+            // Use fallback data immediately instead of showing error
+            console.log("Using fallback data for gold-rupee chart");
+            // ...fallback data handling code...
             
-            // Add fallback notice
-            const fallbackNotice = document.createElement('div');
-            fallbackNotice.style.cssText = 'font-size: 11px; color: #ff6b6b; margin-top: 5px;';
-            fallbackNotice.textContent = 'Using offline sample data (API unavailable)';
-            canvas.parentNode.insertBefore(fallbackNotice, canvas.nextSibling);
-          });
-      } else {
-        console.error("No sample data provider available for fallback");
-        container.innerHTML = '<div style="padding: 20px; color: #ff6b6b;">Could not load chart data</div>';
-      }
-      
-      // Keep the description section
-      const chartDescription = document.createElement('div');
-      chartDescription.style.cssText = `
-          margin-top: 10px; 
-          font-size: 11px;
-          color: #a0a0a0;
-          line-height: 1.4;
-          font-style: italic;
-          padding: 0 5px;
-      `;
-      chartDescription.innerHTML = `
-          This chart visualization is powered by a custom Node.js API I built from scratch that fetches live gold price data and USD/INR exchange rates. 
-          The data is processed through a serverless function using Express for routing and Chart.js for visualization, demonstrating full-stack development skills.
-      `;
-      
-      // Add the description after the container
-      container.parentNode.insertBefore(chartDescription, container.nextSibling);
-    });
-};
-
-// Update the standalone chart creation to prevent fallback
-window.createStandaloneGoldRupeeChart = function(containerId) {
-    console.log(`Creating standalone gold-rupee chart in container: ${containerId}`);
-    
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Container not found: ${containerId}`);
-        return;
-    }
-    
-    // Show loading state
-    container.innerHTML = '<div style="padding:20px;text-align:center;color:#fff;">Loading data...</div>';
-    
-    const apiUrl = '/api/gold-rupee';
-    let retryCount = 0;
-    const maxRetries = 3;
-    
-    function fetchWithRetry() {
-        fetch(apiUrl, {
-            headers: {
-                'Accept': 'application/json',
-                'Cache-Control': 'no-cache'
-            }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            // Clear container and create canvas
-            container.innerHTML = '';
-            const canvas = document.createElement('canvas');
-            container.appendChild(canvas);
+            // Add the description even when using fallback data
+            const chartDescription = document.createElement('div');
+            chartDescription.style.cssText = `
+                margin-top: 10px; 
+                font-size: 11px;
+                color: #a0a0a0;
+                line-height: 1.4;
+                font-style: italic;
+                padding: 0 5px;
+            `;
+            chartDescription.innerHTML = `
+                This chart visualization is powered by a custom Node.js API I built from scratch that fetches live gold price data and USD/INR exchange rates. 
+                The data is processed through a serverless function using Express for routing and Chart.js for visualization, demonstrating full-stack development skills.
+            `;
             
-            // Create chart and store reference
-            const chart = createGoldRupeeChart(canvas, data);
-            container._chart = chart;
-            
-            // Prevent any further reinitialization
-            container.setAttribute('data-chart-initialized', 'true');
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            if (retryCount < maxRetries) {
-                retryCount++;
-                console.log(`Retrying (${retryCount}/${maxRetries})...`);
-                setTimeout(fetchWithRetry, 1000 * retryCount);
-            } else {
-                container.innerHTML = `
-                    <div style="color:#ff6b6b;padding:20px;text-align:center;">
-                        Failed to load data after ${maxRetries} attempts.<br>
-                        <button onclick="window.createStandaloneGoldRupeeChart('${containerId}')" 
-                                style="margin-top:10px;padding:5px 10px;cursor:pointer;">
-                            Try Again
-                        </button>
-                    </div>`;
-            }
+            // Add the description after the container
+            container.parentNode.insertBefore(chartDescription, container.nextSibling);
         });
-    }
-    
-    fetchWithRetry();
 };
-
-function createGoldRupeeChart(containerId) {
-  console.log('Initializing Gold-Rupee chart...');
-  
-  // Fetch data from API with retry logic
-  const fetchData = async (retries = 3) => {
-    try {
-      const response = await fetch('/api/gold-rupee', {
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-      
-      if (!response.ok) throw new Error(`API returned ${response.status}`);
-      
-      const data = await response.json();
-      console.log('Received API data:', data);
-      return data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      if (retries > 0) {
-        console.log(`Retrying... (${retries} attempts left)`);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        return fetchData(retries - 1);
-      }
-      return null;
-    }
-  };
-
-  // Process the data for chart display
-  const processData = (rawData) => {
-    if (!rawData) return null;
-    
-    let dataArray = rawData.data || rawData;
-    if (!Array.isArray(dataArray)) {
-      console.error('Invalid data format:', rawData);
-      return null;
-    }
-
-    // Sort by date ascending
-    dataArray.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    // Filter for last 5 years
-    const fiveYearsAgo = new Date();
-    fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
-    
-    dataArray = dataArray.filter(item => new Date(item.date) >= fiveYearsAgo);
-    
-    return {
-      labels: dataArray.map(item => new Date(item.date).toLocaleDateString()),
-      goldData: dataArray.map(item => parseFloat(item.goldPrice)),
-      rupeeData: dataArray.map(item => parseFloat(item.rupeeRate))
-    };
-  };
-
-  // Create and configure the chart
-  const createChart = (processedData) => {
-    const ctx = document.getElementById(containerId).getContext('2d');
-    
-    return new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: processedData.labels,
-        datasets: [
-          {
-            label: 'Gold Price (USD)',
-            data: processedData.goldData,
-            borderColor: 'rgb(255, 215, 0)',
-            backgroundColor: 'rgba(255, 215, 0, 0.1)',
-            yAxisID: 'y-gold'
-          },
-          {
-            label: 'USD/INR Rate',
-            data: processedData.rupeeData,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgba(75, 192, 192, 0.1)',
-            yAxisID: 'y-rupee'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
-        scales: {
-          x: {
-            display: true,
-            title: {
-              display: true,
-              text: '5-Year Range'
-            },
-            ticks: {
-              maxTicksLimit: 12,
-              callback: function(value, index) {
-                // Show fewer x-axis labels for clarity
-                const date = new Date(this.getLabelForValue(value));
-                return date.toLocaleDateString('en-US', { 
-                  year: '2-digit',
-                  month: 'short'
-                });
-              }
-            }
-          },
-          'y-gold': {
-            type: 'linear',
-            display: true,
-            position: 'left',
-            title: {
-              display: true,
-              text: 'Gold Price (USD)'
-            }
-          },
-          'y-rupee': {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            title: {
-              display: true,
-              text: 'USD/INR Rate'
-            },
-            grid: {
-              drawOnChartArea: false
-            }
-          }
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Gold Price vs. USD/INR Exchange Rate'
-          },
-          tooltip: {
-            callbacks: {
-              title: function(tooltipItems) {
-                return new Date(tooltipItems[0].label).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                });
-              }
-            }
-          }
-        }
-      }
-    });
-  };
-
-  // Initialize the chart
-  (async () => {
-    const container = document.getElementById(containerId);
-    if (!container) {
-      console.error(`Container ${containerId} not found`);
-      return;
-    }
-
-    container.innerHTML = '<canvas></canvas>';
-    
-    const data = await fetchData();
-    if (!data) {
-      console.error('Failed to fetch data from API');
-      return;
-    }
-
-    const processedData = processData(data);
-    if (!processedData) {
-      console.error('Failed to process data');
-      return;
-    }
-
-    console.log('Creating chart with processed data:', processedData);
-    createChart(processedData);
-  })();
-}

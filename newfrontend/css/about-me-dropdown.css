@@ -50,7 +50,7 @@
 
 /* Position the dropdown below the button */
 .about-dropdown {
-    position: absolute;
+    position: fixed;
     top: 70px; /* Position below the nav bar */
     right: 30px; /* Align to the right side */
     width: 500px;

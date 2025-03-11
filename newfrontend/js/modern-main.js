@@ -269,7 +269,158 @@ document.addEventListener('DOMContentLoaded', function() {
                     project.components.forEach(component => {
                         console.log(`Initializing component: ${component.type} - ${component.id}`);
                         if (component.type === 'chart' && component.chartType === 'gold-rupee') {
-                            loadGoldRupeeChart(component.id);
+                            const chartContainer = document.getElementById(component.id);
+                            if (chartContainer && !chartContainer.hasAttribute('data-initialized')) {
+                                console.log('Initializing gold-rupee chart');
+                                chartContainer.setAttribute('data-initialized', 'true');
+                                
+                                fetch('/api/gold-rupee', {
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Cache-Control': 'no-store, no-cache, must-revalidate',
+                                        'Pragma': 'no-cache'
+                                    }
+                                })
+                                .then(response => {
+                                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    // Ensure data structure is valid
+                                    const processedData = {
+                                        metadata: {
+                                            startDate: data.metadata?.startDate || data.data?.[0]?.date || '2023-01-01',
+                                            endDate: data.metadata?.endDate || data.data?.[data.data?.length-1]?.date || '2023-12-31',
+                                            dataPoints: data.data?.length || 0,
+                                            lastUpdated: data.metadata?.lastUpdated || new Date().toISOString()
+                                        },
+                                        data: Array.isArray(data.data) ? data.data : []
+                                    };
+
+                                    if (!processedData.data.length) {
+                                        throw new Error('No valid data points available');
+                                    }
+
+                                    const canvas = document.createElement('canvas');
+                                    chartContainer.innerHTML = '';
+                                    chartContainer.appendChild(canvas);
+
+                                    new Chart(canvas, {
+                                        type: 'line',
+                                        data: {
+                                            labels: data.data.map(item => {
+                                                const date = new Date(item.date);
+                                                return date.toLocaleDateString('en-US', {
+                                                    year: '2-digit',
+                                                    month: 'short'
+                                                });
+                                            }),
+                                            datasets: [{
+                                                label: 'Gold Price (USD/oz)',
+                                                data: data.data.map(item => item.goldPrice),
+                                                borderColor: '#D4A017',
+                                                backgroundColor: 'rgba(212, 160, 23, 0.1)',
+                                                yAxisID: 'y-gold'
+                                            }, {
+                                                label: 'USD/INR Rate',
+                                                data: data.data.map(item => item.rupeeRate),
+                                                borderColor: '#2E8B57',
+                                                backgroundColor: 'rgba(46, 139, 87, 0.1)',
+                                                yAxisID: 'y-rupee'
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            interaction: { mode: 'index', intersect: false },
+                                            plugins: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Gold Price vs USD/INR Rate (5 Year Trend)',
+                                                    color: '#ffffff',
+                                                    font: { size: 16 }
+                                                },
+                                                legend: { labels: { color: '#ffffff' } }
+                                            },
+                                            scales: {
+                                                x: {
+                                                    ticks: {
+                                                        color: '#a0a0a0',
+                                                        maxRotation: 45,
+                                                        autoSkip: true,
+                                                        maxTicksLimit: 12
+                                                    }
+                                                },
+                                                'y-gold': {
+                                                    position: 'left',
+                                                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                                    ticks: { color: '#D4A017' },
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Gold Price (USD/oz)',
+                                                        color: '#D4A017'
+                                                    }
+                                                },
+                                                'y-rupee': {
+                                                    position: 'right',
+                                                    grid: { drawOnChartArea: false },
+                                                    ticks: { color: '#2E8B57' },
+                                                    title: {
+                                                        display: true,
+                                                        text: 'USD/INR Rate',
+                                                        color: '#2E8B57'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                    // Add description after chart
+                                    const description = document.createElement('div');
+                                    description.className = 'chart-description';
+                                    description.style.cssText = `
+                                        margin: 10px 0 30px 0;
+                                        font-size: 14px;
+                                        color: #a0a0a0;
+                                        line-height: 1.6;
+                                        font-style: italic;
+                                        text-align: left;
+                                        padding: 10px;
+                                        border-left: 3px solid #FFD700;
+                                        background: rgba(255, 215, 0, 0.05);
+                                    `;
+                                    description.innerHTML = `
+                                        This chart visualization is powered by a custom Node.js API I built from scratch that fetches live gold price data and USD/INR exchange rates. 
+                                        The data is processed through a serverless function using Express for routing and Chart.js for visualization, demonstrating full-stack development skills.
+                                    `;
+                                    chartContainer.parentNode.insertBefore(description, chartContainer.nextSibling);
+                                })
+                                .catch(error => {
+                                    console.error('Error loading gold-rupee data:', error);
+                                    console.log('Attempting to use fallback data...');
+                                    const fallbackData = window.goldRupeeFallbackData;
+                                    
+                                    if (fallbackData?.data?.length) {
+                                        console.log('Using fallback data');
+                                        const canvas = document.createElement('canvas');
+                                        chartContainer.innerHTML = '';
+                                        chartContainer.appendChild(canvas);
+                                        
+                                        new Chart(canvas, {
+                                            // ... original chart configuration ...
+                                        });
+                                    } else {
+                                        chartContainer.innerHTML = `
+                                            <div style="text-align:center;padding:20px;color:#ff4444;">
+                                                Failed to load chart data
+                                                <button onclick="window.location.reload()" class="retry-btn">
+                                                    Retry
+                                                </button>
+                                            </div>
+                                        `;
+                                    }
+                                });
+                            }
                         } else if (component.type === 'showcase') {
                             initializeShowcase(component.id, component.endpoint);
                         }
@@ -304,147 +455,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 500);
 });
-
-// Fixed implementation of the Gold-Rupee chart loader
-function loadGoldRupeeChart(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container || container.getAttribute('data-chart-initialized') === 'true') {
-        return;
-    }
-
-    console.log('Loading gold-rupee chart in', containerId);
-    container.setAttribute('data-chart-initialized', 'true');
-    
-    // Show loading message
-    container.innerHTML = '<div class="loading-message"><i class="fas fa-spinner fa-spin"></i> Loading gold price data...</div>';
-    
-    // Use sample data or API data
-    if (window.apiService) {
-        window.apiService.get('gold-rupee')
-            .then(data => {
-                createGoldRupeeChart(container, data);
-            })
-            .catch(error => {
-                console.error('Error loading gold-rupee data:', error);
-                // Use sample data as fallback
-                createGoldRupeeChart(container, getSampleGoldRupeeData());
-            });
-    } else {
-        // Use sample data directly
-        createGoldRupeeChart(container, getSampleGoldRupeeData());
-    }
-}
-
-// Create the gold-rupee chart
-function createGoldRupeeChart(container, data) {
-    console.log('Creating gold-rupee chart');
-    
-    // Clear the container
-    container.innerHTML = '';
-    
-    // Create canvas
-    const canvas = document.createElement('canvas');
-    container.appendChild(canvas);
-    
-    // Format data
-    const labels = [];
-    const goldValues = [];
-    const rupeeValues = [];
-    
-    if (data && data.data && Array.isArray(data.data)) {
-        data.data.forEach(item => {
-            if (item.date) {
-                const date = new Date(item.date);
-                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-            }
-            if (item.goldPrice !== undefined) goldValues.push(parseFloat(item.goldPrice));
-            if (item.rupeeRate !== undefined) rupeeValues.push(parseFloat(item.rupeeRate));
-        });
-    }
-    
-    // Create the chart with Chart.js
-    const chart = new Chart(canvas, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Gold Price (USD/oz)',
-                    data: goldValues,
-                    borderColor: '#D4A017', 
-                    backgroundColor: 'rgba(212, 160, 23, 0.1)',
-                    yAxisID: 'y-gold',
-                    borderWidth: 2,
-                    tension: 0.3,
-                    fill: false
-                },
-                {
-                    label: 'USD/INR Rate',
-                    data: rupeeValues,
-                    borderColor: '#2E8B57',
-                    backgroundColor: 'rgba(46, 139, 87, 0.1)',
-                    yAxisID: 'y-rupee',
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    tension: 0.3,
-                    fill: false
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Gold Price vs USD/INR Exchange Rate',
-                    color: '#ffffff',
-                    font: { family: "'IBM Plex Mono', monospace", size: 16 }
-                },
-                legend: { display: true, position: 'top', labels: { color: '#ffffff' } }
-            },
-            scales: {
-                'y-gold': {
-                    position: 'left',
-                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                    ticks: { color: '#D4A017' },
-                    title: { display: true, text: 'Gold Price (USD/oz)', color: '#D4A017' }
-                },
-                'y-rupee': {
-                    position: 'right',
-                    grid: { drawOnChartArea: false },
-                    ticks: { color: '#2E8B57' },
-                    title: { display: true, text: 'USD/INR Rate', color: '#2E8B57' }
-                }
-            }
-        }
-    });
-    
-    // Store reference to chart instance
-    container._chart = chart;
-    console.log('Gold-rupee chart created successfully');
-}
-
-// Sample data function for gold-rupee chart
-function getSampleGoldRupeeData() {
-    return {
-        title: "Gold Price vs USD/INR Exchange Rate",
-        data: [
-            { date: '2023-01-01', goldPrice: 1830.25, rupeeRate: 82.74 },
-            { date: '2023-02-01', goldPrice: 1859.75, rupeeRate: 82.95 },
-            { date: '2023-03-01', goldPrice: 1845.30, rupeeRate: 83.12 },
-            { date: '2023-04-01', goldPrice: 1982.10, rupeeRate: 82.53 },
-            { date: '2023-05-01', goldPrice: 2035.45, rupeeRate: 82.67 },
-            { date: '2023-06-01', goldPrice: 1976.40, rupeeRate: 83.30 },
-            { date: '2023-07-01', goldPrice: 1942.15, rupeeRate: 83.14 },
-            { date: '2023-08-01', goldPrice: 1994.80, rupeeRate: 83.23 },
-            { date: '2023-09-01', goldPrice: 1866.30, rupeeRate: 83.42 },
-            { date: '2023-10-01', goldPrice: 1985.60, rupeeRate: 83.36 },
-            { date: '2023-11-01', goldPrice: 2043.20, rupeeRate: 83.11 },
-            { date: '2023-12-01', goldPrice: 2078.40, rupeeRate: 83.18 }
-        ]
-    };
-}
 
 // Initialize showcase function
 function initializeShowcase(containerId, dataUrl, options = {}) {
@@ -520,7 +530,7 @@ function renderShowcase(container, data, options) {
     slides.forEach((slide, index) => {
         html += `
             <div class="showcase-section ${index === 0 ? 'active' : ''}" data-index="${index}">
-                <h4 class="showcase-section-title">${slide.title}</h4>
+                <h4 class="showcase-section-title" style="font-size: 1.4em; margin-bottom: 15px;">${slide.title}</h4>
                 <div class="showcase-section-content">
                     <p>${slide.content}</p>
                 </div>
@@ -1315,3 +1325,45 @@ function updateScrollIndicatorFunctionality() {
         });
     }
 }
+
+try {
+    // ...existing code that might throw an error...
+} catch (error) {
+    console.error('Error loading gold-rupee data:', error);
+    console.log('Attempting to use fallback data...');
+    const fallbackData = window.goldRupeeFallbackData;
+    
+    if (fallbackData?.data?.length) {
+        console.log('Using fallback data');
+        const canvas = document.createElement('canvas');
+        chartContainer.innerHTML = '';
+        chartContainer.appendChild(canvas);
+        
+        new Chart(canvas, {
+            // ...existing chart configuration...
+        });
+
+        // Add description text right after the chart
+        const description = document.createElement('div');
+        description.className = 'chart-description';
+        description.style.cssText = `
+            margin: 10px 0 30px 0;
+            font-size: 14px;
+            color: #a0a0a0;
+            line-height: 1.6;
+            font-style: italic;
+            text-align: left;
+            padding: 10px;
+            border-left: 3px solid #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+        `;
+        description.innerHTML = `
+            This chart visualization is powered by a custom Node.js API I built from scratch that fetches live gold price data and USD/INR exchange rates. 
+            The data is processed through a serverless function using Express for routing and Chart.js for visualization, demonstrating full-stack development skills.
+        `;
+        chartContainer.parentNode.insertBefore(description, chartContainer.nextSibling);
+    }
+    // ...existing error handling code...
+}
+
+// ...existing code...

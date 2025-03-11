@@ -34,7 +34,7 @@
 .showcase-metadata {
   display: flex;
   gap: 1rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   align-items: center;
 }
@@ -42,18 +42,21 @@
 .showcase-author {
   color: #FFFFFF; /* Pure white */
   position: relative;
+  font-size: 1rem
 }
 
 .showcase-author::after {
   content: '•';
-  position: absolute;
+  position: relative;
   right: -0.75rem;
   opacity: 0.5;
 }
 
 .showcase-date {
+  position: relative;
   opacity: 0.7;
   font-family: var(--font-code);
+  font-size: 1rem
 }
 
 /* Content area styles - remove scrolling functionality */
@@ -92,10 +95,10 @@
 }
 
 .showcase-section-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--accent-primary);
-  font-weight: 400;
+  font-size: 1.6em;  /* Increased from default */
+  margin-bottom: 15px;
+  color: var(--text-primary, #ffffff);
+  font-weight: 500;
   letter-spacing: -0.02em;
   position: relative;
   display: inline-block;
