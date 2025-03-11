@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redline Exotics Financial Model</title>
+    <link rel="stylesheet" href="css/modern-styles.css">
+    <link rel="stylesheet" href="css/financial-spreadsheet.css">
+    <link rel="stylesheet" href="css/financial-tabs.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles for financial model page */
+        body {
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+        }
+        
+        .container {
+            padding-top: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        h1 {
+            margin-bottom: 1rem;
+        }
+        
+        .card-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tag {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-family: var(--font-code);
+        }
+        
+        /* Print-friendly styling */
+        @media print {
+            body {
+                color: #000;
+                background-color: #fff;
+            }
+            
+            .top-nav, footer {
+                display: none;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .financial-table th {
+                background-color: #f0f0f0;
+                color: #000;
+            }
+            
+            .financial-table th, .financial-table td {
+                border-bottom: 1px solid #ccc;
+            }
+            
+            @page {
+                size: letter;
+                margin: 0.5in;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-contact">
+                <a href="mailto:rylandscottwittman@gmail.com">rylandscottwittman@gmail.com</a>
+                <span class="contact-separator">|</span>
+                <a href="tel:+18477143013">(847) 714-3013</a>
+                <span class="contact-separator">|</span>
+                <span class="location">Florida</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Redline Exotics Financial Model</h1>
+        
+        <p>This page displays the comprehensive financial model for Redline Exotics, a luxury exotic car rental business, showcasing 5-year projections from 2023 to 2028.</p>
+        
+        <div class="card">
+            <div class="card-content">
+                <h2 class="card-title">Luxury Exotic Car Rental Business</h2>
+                <p class="card-description">
+                    The following financial model demonstrates the business plan and growth strategy for Redline Exotics, a high-end exotic car rental company.
+                    Use the tabs below to navigate between financial statements including Income Statement, Balance Sheet, Cash Flow Statement, 
+                    Financial Ratios, Asset Depreciation Schedule and Valuation. Each section can be expanded or collapsed for easier review.
+                </p>
+                
+                <!-- Financial Model Container -->
+                <div id="financial-model-container">
+                    <div class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i> Loading financial model...
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag">Financial Reporting</span>
+                    <span class="tag">Market Data</span>
+                    <span class="tag">Revenue Forecasting</span>
+                    <span class="tag">Growth Strategy</span>
+                </div>
+                
+                <div class="print-controls" style="margin-top: 2rem; text-align: right;">
+                    <button onclick="window.print()" class="btn" style="background: rgba(100, 255, 218, 0.1); border: none; color: var(--accent-primary); padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                        <i class="fas fa-print"></i> Print Model
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/" target="_blank" class="social-icon">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+        <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="index.html#projects" class="footer-link">Projects</a>
+            <a href="#" class="footer-link">Contact</a>
+        </div>
+        <p>&copy; 2025 Ryland Wittman. All rights reserved.</p>
+    </footer>
+    
+    <!-- Load the HTML financial model renderer -->
+    <script src="js/html-financial-model.js"></script>
+    <script src="js/debug-financial-model.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render the financial model
+            renderFinancialModel('financial-model-container');
+            
+            // Add debug panel and log tab information after a delay
+            setTimeout(() => {
+                // Add debug panel for development
+                if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                    addFinancialModelDebugPanel('financial-model-container');
+                    inspectFinancialModelTabs('financial-model-container');
+                }
+                
+                // Log tab counts to verify they're being created
+                const tabButtons = document.querySelectorAll('.financial-tab-button');
+                const tabPanes = document.querySelectorAll('.financial-tab-pane');
+                console.log(`Found ${tabButtons.length} tab buttons and ${tabPanes.length} tab panes`);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 (function() {
     // Default configuration
     const defaultConfig = {
-        baseUrl: 'http://localhost:3000', // Default API base URL
+        baseUrl: 'http://localhost:3001', // Default API base URL
         apiVersion: 'v1',
         timeout: 10000,
         retryCount: 3
@@ -78,7 +78,7 @@ const API_CONFIG = {
   baseUrl: 'https://your-api-url.onrender.com',
   
   // Fallback to localhost for development
-  localUrl: 'http://localhost:3000',
+  localUrl: 'http://localhost:3001',
   
   // Endpoints
   endpoints: {

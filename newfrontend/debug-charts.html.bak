@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Debug Page</title>
+    <link rel="stylesheet" href="css/modern-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        body {
+            padding: 2rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .chart-debug {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .debug-controls {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+        button {
+            background: #D4364A;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        h2 {
+            color: #D4364A;
+            margin-bottom: 1rem;
+        }
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        pre {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>Chart Debugging Page</h1>
+        <p>Use this page to test if charts are working properly and diagnose any issues.</p>
+        
+        <div class="debug-controls">
+            <h2>Chart.js Status</h2>
+            <div class="status" id="chart-status">Checking...</div>
+            
+            <h2>Controls</h2>
+            <button id="test-chart">Create Test Chart</button>
+            <button id="check-scripts">Check Script Loading</button>
+            <button id="reload-page">Reload Page</button>
+            <button id="back-to-main">Back to Main Page</button>
+        </div>
+        
+        <div class="chart-debug">
+            <h2>Test Chart</h2>
+            <div class="chart-container" id="debug-chart" style="height: 300px;"></div>
+        </div>
+        
+        <div class="chart-debug">
+            <h2>JavaScript Console</h2>
+            <div class="status" id="console-output">
+                <pre>// Console output will appear here</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Console output capture
+        (function() {
+            const originalConsole = {
+                log: console.log,
+                error: console.error,
+                warn: console.warn
+            };
+            
+            const output = document.querySelector('#console-output pre');
+            
+            function updateConsole(text, type = 'log') {
+                let color;
+                switch(type) {
+                    case 'error': color = '#ff5252'; break;
+                    case 'warn': color = '#ffdb4d'; break;
+                    default: color = '#ffffff';
+                }
+                
+                output.innerHTML += `<span style="color:${color}">${new Date().toLocaleTimeString()} [${type}] ${text}</span>\n`;
+                output.scrollTop = output.scrollHeight;
+            }
+            
+            console.log = function(...args) {
+                originalConsole.log(...args);
+                updateConsole(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '));
+            };
+            
+            console.error = function(...args) {
+                originalConsole.error(...args);
+                updateConsole(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'error');
+            };
+            
+            console.warn = function(...args) {
+                originalConsole.warn(...args);
+                updateConsole(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'warn');
+            };
+        })();
+        
+        // Check if Chart.js is loaded
+        function checkChartJs() {
+            const status = document.getElementById('chart-status');
+            if (typeof Chart === 'undefined') {
+                status.textContent = '❌ Chart.js is NOT loaded';
+                status.style.color = '#ff5252';
+            } else {
+                status.textContent = '✅ Chart.js is loaded correctly. Version: ' + Chart.version;
+                status.style.color = '#4caf50';
+            }
+        }
+        
+        // Create a simple test chart
+        function createTestChart() {
+            console.log('Creating test chart...');
+            const chartElement = document.getElementById('debug-chart');
+            
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js not loaded!');
+                chartElement.innerHTML = '<div style="color:#ff5252;text-align:center;padding:2rem;">Chart.js not available</div>';
+                return;
+            }
+            
+            chartElement.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            chartElement.appendChild(canvas);
+            
+            const data = {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Test Data',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: 'rgba(212, 54, 74, 0.5)',
+                    borderColor: '#D4364A',
+                    borderWidth: 1
+                }]
+            };
+            
+            try {
+                new Chart(canvas, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                console.log('Test chart created successfully');
+            } catch(error) {
+                console.error('Error creating test chart:', error);
+                chartElement.innerHTML = `<div style="color:#ff5252;text-align:center;padding:2rem;">
+                    Error creating chart: ${error.message}</div>`;
+            }
+        }
+        
+        // Check if scripts are loaded
+        function checkScripts() {
+            console.log('Checking scripts...');
+            
+            const scripts = [
+                { name: 'Chart.js', variable: 'Chart' },
+                { name: 'modern-charts.js', function: 'createEconomicChart' },
+                { name: 'modern-main.js', function: 'initializeChartWithData' },
+                { name: 'api-service.js', variable: 'apiService' },
+                { name: 'sample-data-loader.js', variable: 'sampleDataProvider' }
+            ];
+            
+            scripts.forEach(script => {
+                if (script.variable) {
+                    if (window[script.variable] !== undefined) {
+                        console.log(`✅ ${script.name} is loaded (variable ${script.variable} exists)`);
+                    } else {
+                        console.error(`❌ ${script.name} is NOT loaded (variable ${script.variable} not found)`);
+                    }
+                } else if (script.function) {
+                    if (typeof window[script.function] === 'function') {
+                        console.log(`✅ ${script.name} is loaded (function ${script.function} exists)`);
+                    } else {
+                        console.error(`❌ ${script.name} is NOT loaded (function ${script.function} not found)`);
+                    }
+                }
+            });
+        }
+        
+        // Set up event listeners
+        document.getElementById('test-chart').addEventListener('click', createTestChart);
+        document.getElementById('check-scripts').addEventListener('click', checkScripts);
+        document.getElementById('reload-page').addEventListener('click', () => location.reload());
+        document.getElementById('back-to-main').addEventListener('click', () => window.location.href = 'index.html');
+        
+        // Run initial checks
+        checkChartJs();
+        console.log('Debug page loaded');
+    </script>
+</body>
+</html>
