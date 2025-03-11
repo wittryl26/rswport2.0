@@ -1,129 +1,109 @@
 /**
- * Direct chart implementation that bypasses all existing code
+ * Fixed chart implementation with correct data and placement
  */
 
-// Execute when page is fully loaded to ensure all resources are available
-window.addEventListener('load', function() {
-    console.log("Direct chart script running on window load");
-    setTimeout(createDirectChart, 500);
-});
-
-// Execute on DOMContentLoaded as well for redundancy
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Direct chart script running on DOMContentLoaded");
-    setTimeout(createDirectChart, 500);
+    // Wait for project cards to load first
+    setTimeout(initializeFixedChart, 1000);
 });
 
-function createDirectChart() {
-    console.log("Creating direct chart...");
+function initializeFixedChart() {
+    console.log("Initializing fixed chart");
     
-    // Check if Chart.js is available
-    if (typeof Chart === 'undefined') {
-        console.error("Chart.js not available, attempting to load it");
-        loadChartJsLibrary();
+    // Find or create the chart container in the first project card
+    const firstProjectCard = document.querySelector('.card');
+    if (!firstProjectCard) {
+        console.error("No project cards found to add chart to");
+        insertChartBeforeProjects(); // Fallback placement
         return;
     }
     
-    // Find or create container
-    let chartContainer = document.getElementById('direct-chart-container');
-    if (!chartContainer) {
-        console.log("Creating new chart container");
-        chartContainer = document.createElement('div');
-        chartContainer.id = 'direct-chart-container';
-        chartContainer.className = 'chart-container';
-        chartContainer.style.height = '400px';
-        chartContainer.style.marginTop = '30px';
-        chartContainer.style.marginBottom = '30px';
-        
-        // Insert container at top of main content for visibility
-        const main = document.querySelector('main');
-        if (main && main.firstChild) {
-            main.insertBefore(chartContainer, main.firstChild);
-        } else {
-            // Fallback to appending to body
-            document.body.appendChild(chartContainer);
-        }
+    // Create chart container
+    let chartContainer = document.createElement('div');
+    chartContainer.id = 'gold-rupee-chart';
+    chartContainer.className = 'chart-container';
+    
+    // Insert it into the first card
+    const cardContent = firstProjectCard.querySelector('.card-content');
+    if (cardContent) {
+        cardContent.prepend(chartContainer);
+    } else {
+        firstProjectCard.prepend(chartContainer);
     }
     
-    // Create canvas element
-    let canvas = chartContainer.querySelector('canvas');
-    if (!canvas) {
-        console.log("Creating new canvas in container");
-        canvas = document.createElement('canvas');
-        chartContainer.appendChild(canvas);
-    }
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    chartContainer.appendChild(canvas);
     
-    // Create the chart using inline data
+    // Create chart with correct data structure
     try {
-        console.log("Attempting to create chart");
-        
-        const ctx = canvas.getContext('2d');
-        
-        // Sample data
-        const chartData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-            datasets: [{
-                label: 'Gold Price (USD)',
-                data: [1780, 1830, 1790, 1840, 1910, 1870, 1920],
-                borderColor: '#FFDF00',
-                backgroundColor: 'rgba(255, 223, 0, 0.2)',
-                borderWidth: 2,
-                tension: 0.4
-            }, {
-                label: 'INR/USD Exchange Rate',
-                data: [73.2, 72.8, 73.5, 74.1, 73.9, 74.5, 75.0],
-                borderColor: '#64ffda',
-                backgroundColor: 'rgba(100, 255, 218, 0.2)',
-                borderWidth: 2,
-                tension: 0.4,
-                yAxisID: 'y2'
-            }]
-        };
-        
-        // Chart configuration
-        new Chart(ctx, {
+        new Chart(canvas.getContext('2d'), {
             type: 'line',
-            data: chartData,
+            data: {
+                labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [
+                    {
+                        label: 'Gold Price (USD)',
+                        data: [1265, 1295, 1390, 1684, 1804, 1795, 1932],
+                        borderColor: '#f7df00', // Gold color
+                        backgroundColor: 'rgba(247, 223, 0, 0.1)',
+                        yAxisID: 'y',
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'INR/USD Rate',
+                        data: [65.12, 68.47, 70.39, 74.13, 73.77, 76.21, 82.04],
+                        borderColor: 'rgba(100, 255, 218, 1)',
+                        backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                        yAxisID: 'y1',
+                        tension: 0.4,
+                        borderWidth: 2
+                    }
+                ]
+            },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutQuart'
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
                 },
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Gold Price vs INR Exchange Rate',
+                        text: 'Gold Price vs. INR/USD Exchange Rate',
                         color: '#ffffff',
                         font: {
                             family: "'IBM Plex Mono', monospace",
-                            size: 16
+                            size: 16,
+                            weight: 'normal'
                         },
                         padding: {
-                            top: 10,
                             bottom: 20
                         }
                     },
                     legend: {
+                        position: 'top',
                         labels: {
+                            usePointStyle: true,
                             color: '#a0a0a0',
                             font: {
                                 family: "'IBM Plex Mono', monospace"
-                            },
-                            padding: 15
+                            }
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 15, 15, 0.85)',
+                        backgroundColor: 'rgba(15, 15, 15, 0.9)',
                         titleFont: {
                             family: "'IBM Plex Mono', monospace"
                         },
                         bodyFont: {
                             family: "'IBM Plex Mono', monospace"
                         },
-                        borderColor: '#64ffda',
-                        borderWidth: 1
+                        borderColor: 'rgba(100, 255, 218, 0.3)',
+                        borderWidth: 1,
+                        padding: 10
                     }
                 },
                 scales: {
@@ -139,6 +119,8 @@ function createDirectChart() {
                         }
                     },
                     y: {
+                        type: 'linear',
+                        position: 'left',
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
                         },
@@ -151,16 +133,17 @@ function createDirectChart() {
                         title: {
                             display: true,
                             text: 'Gold Price (USD)',
-                            color: '#ffffff',
+                            color: '#f7df00',
                             font: {
                                 family: "'IBM Plex Mono', monospace"
                             }
                         }
                     },
-                    y2: {
+                    y1: {
+                        type: 'linear',
                         position: 'right',
                         grid: {
-                            display: false
+                            drawOnChartArea: false
                         },
                         ticks: {
                             color: '#a0a0a0',
@@ -171,7 +154,7 @@ function createDirectChart() {
                         title: {
                             display: true,
                             text: 'INR/USD Rate',
-                            color: '#ffffff',
+                            color: '#64ffda',
                             font: {
                                 family: "'IBM Plex Mono', monospace"
                             }
@@ -181,19 +164,146 @@ function createDirectChart() {
             }
         });
         
-        console.log("Chart created successfully!");
+        console.log("Chart created successfully in the correct position");
+        
+        // Add a descriptive text below the chart
+        const description = document.createElement('p');
+        description.className = 'card-description';
+        description.innerHTML = 'This chart visualizes the relationship between Gold Price in USD and the INR/USD exchange rate over the past 7 years, showcasing the correlation between these financial indicators.';
+        chartContainer.after(description);
+        
     } catch (error) {
         console.error("Error creating chart:", error);
     }
 }
 
-// Function to dynamically load Chart.js if needed
-function loadChartJsLibrary() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js';
-    script.onload = function() {
-        console.log("Chart.js loaded dynamically");
-        setTimeout(createDirectChart, 100);
-    };
-    document.head.appendChild(script);
+// Fallback placement if no project cards exist yet
+function insertChartBeforeProjects() {
+    console.log("Using fallback chart placement");
+    
+    // Find projects section
+    const projectsSection = document.getElementById('projects');
+    if (!projectsSection) {
+        console.error("Could not find projects section");
+        return;
+    }
+    
+    // Create container
+    const container = document.createElement('div');
+    container.className = 'chart-section';
+    container.style.marginBottom = '3rem';
+    
+    // Add a title
+    const title = document.createElement('h2');
+    title.textContent = 'Financial Data Visualization';
+    title.style.marginBottom = '1.5rem';
+    title.style.fontSize = '2rem';
+    title.style.fontWeight = '400';
+    container.appendChild(title);
+    
+    // Create chart container
+    const chartContainer = document.createElement('div');
+    chartContainer.id = 'gold-rupee-chart';
+    chartContainer.className = 'chart-container';
+    container.appendChild(chartContainer);
+    
+    // Insert before projects section
+    projectsSection.parentNode.insertBefore(container, projectsSection);
+    
+    // Create the chart
+    const canvas = document.createElement('canvas');
+    chartContainer.appendChild(canvas);
+    
+    // Create chart with same configuration as above
+    try {
+        new Chart(canvas.getContext('2d'), {
+            /* Same configuration as above function */
+            // Chart configuration omitted for brevity - same as above
+            type: 'line',
+            data: {
+                labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [
+                    {
+                        label: 'Gold Price (USD)',
+                        data: [1265, 1295, 1390, 1684, 1804, 1795, 1932],
+                        borderColor: '#f7df00',
+                        backgroundColor: 'rgba(247, 223, 0, 0.1)',
+                        yAxisID: 'y',
+                        tension: 0.4,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'INR/USD Rate',
+                        data: [65.12, 68.47, 70.39, 74.13, 73.77, 76.21, 82.04],
+                        borderColor: 'rgba(100, 255, 218, 1)',
+                        backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                        yAxisID: 'y1',
+                        tension: 0.4,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                // Same options as above
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Gold Price vs. INR/USD Exchange Rate',
+                        color: '#ffffff',
+                        font: {
+                            family: "'IBM Plex Mono', monospace",
+                            size: 16,
+                            weight: 'normal'
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            color: '#a0a0a0',
+                            font: {
+                                family: "'IBM Plex Mono', monospace"
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Gold Price (USD)',
+                            color: '#f7df00'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'INR/USD Rate',
+                            color: '#64ffda'
+                        }
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Error in fallback chart creation:", error);
+    }
 }
+
+// Also run on window load for redundancy
+window.addEventListener('load', function() {
+    setTimeout(initializeFixedChart, 1500);
+});
