@@ -64,7 +64,7 @@
         let rupeeRate = 71;
         
         // Generate 5 years of monthly data
-        const startDate = new Date('2020-01-01');
+        /* Using 5-year data from API */;
         for (let i = 0; i < 60; i++) {
             const date = new Date(startDate);
             date.setMonth(date.getMonth() + i);

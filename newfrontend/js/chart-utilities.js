@@ -18,7 +18,15 @@
     let descriptionAdded = false;
     
     // Main function to create the chart
-    function createStandaloneGoldRupeeChart(containerId) {
+    function createStandaloneGoldRupeeChart {
+
+  // Fetch 5-year data from API
+  fetch('/api/gold-exchange-rate-data')
+    .then(response => response.json())
+    .then(data => {
+      // Use data directly - it will already have 5-year range
+      // Rest of chart code can use this data
+(containerId) {
         console.log(`Creating gold-rupee chart in container: ${containerId}`);
         
         // Get the container
@@ -361,7 +369,7 @@
         let rupeeRate = 71;
         
         // Generate 5 years of monthly data
-        const startDate = new Date('2020-01-01');
+        /* Using 5-year data from API */;
         for (let i = 0; i < 60; i++) {
             const date = new Date(startDate);
             date.setMonth(date.getMonth() + i);

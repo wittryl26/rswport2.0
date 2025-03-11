@@ -52,7 +52,7 @@
         // Helper method to generate realistic 5-year data
         generateFiveYearsData() {
             const data = [];
-            const startDate = new Date('2020-01-01');
+            /* Using 5-year data from API */;
             
             // Gold price starting around $1,500
             let goldPrice = 1500;

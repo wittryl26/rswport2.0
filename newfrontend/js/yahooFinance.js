@@ -38,7 +38,7 @@ class YahooFinanceService {
 
     async getGoldAndRupeeData() {
         const endDate = new Date();
-        const startDate = new Date();
+        /* Using 5-year data from API */;
         startDate.setFullYear(endDate.getFullYear() - 1);
 
         try {

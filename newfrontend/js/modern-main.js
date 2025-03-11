@@ -336,7 +336,15 @@ function loadGoldRupeeChart(containerId) {
 }
 
 // Create the gold-rupee chart
-function createGoldRupeeChart(container, data) {
+function createGoldRupeeChart {
+
+  // Fetch 5-year data from API
+  fetch('/api/gold-exchange-rate-data')
+    .then(response => response.json())
+    .then(data => {
+      // Use data directly - it will already have 5-year range
+      // Rest of chart code can use this data
+(container, data) {
     console.log('Creating gold-rupee chart');
     
     // Clear the container
