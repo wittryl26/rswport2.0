@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vercel Deployment Debug</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; line-height: 1.5; }
+    .container { max-width: 800px; margin: 0 auto; background: #f5f5f5; padding: 20px; border-radius: 5px; }
+    h1 { color: #333; }
+    .status { margin: 20px 0; padding: 15px; border-radius: 4px; }
+    .success { background-color: #dff2bf; color: #4f8a10; }
+    .error { background-color: #ffbaba; color: #d8000c; }
+    pre { background: #333; color: #fff; padding: 10px; border-radius: 4px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vercel Deployment Debug Page</h1>
+    <div class="status success">
+      <p>If you can see this page, your static files are being served correctly!</p>
+    </div>
+    
+    <h2>Configuration:</h2>
+    <pre>{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "newfrontend/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "newfrontend/$1"
+    }
+  ],
+  "outputDirectory": "newfrontend"
+}</pre>
+    
+    <h2>Files in newfrontend:</h2>
+    <pre>[
+  ".gitignore",
+  ".gitkeep",
+  "css",
+  "data",
+  "debug-charts.html",
+  "debug-charts.html.bak",
+  "deploy.js",
+  "docs",
+  "financial-model-pdf.html",
+  "financial-model-pdf.html.bak",
+  "find-portfolio-directories.js",
+  "index.html",
+  "index.html.bak",
+  "js",
+  "misc",
+  "node_modules",
+  "organize-project.js",
+  "package-lock.json",
+  "package.json",
+  "README.md",
+  "resume.html",
+  "resume.html.bak",
+  "src",
+  "static",
+  "test.html",
+  "test.html.bak"
+]</pre>
+    
+    <h2>Next Steps:</h2>
+    <p>If you're seeing a 404 on the main page but can access this debug page, check:</p>
+    <ol>
+      <li>Is your index.html in the correct location?</li>
+      <li>Is your vercel.json routes section correct?</li>
+      <li>Try to rename your output directory to match what's in vercel.json</li>
+    </ol>
+  </div>
+  <script>
+    // Check if API is working
+    fetch('/api/health')
+      .then(response => response.json())
+      .then(data => {
+        const div = document.createElement('div');
+        div.className = 'status success';
+        div.innerHTML = '<p>API endpoint /api/health is working! Response:</p><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        document.querySelector('.container').appendChild(div);
+      })
+      .catch(err => {
+        const div = document.createElement('div');
+        div.className = 'status error';
+        div.innerHTML = '<p>API endpoint /api/health is not responding:</p><pre>' + err.message + '</pre>';
+        document.querySelector('.container').appendChild(div);
+      });
+  </script>
+</body>
+</html>
