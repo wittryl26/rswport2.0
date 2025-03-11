@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="js/direct-chart.js"></script>
     <script>
         // Verify Chart.js is loaded
         window.addEventListener('load', function() {
@@ -133,21 +134,6 @@
             </div>
         </section>
         <div class="loading-indicator" id="loading">Loading more projects...</div>
-        
-        <!-- UNCOMMENT THIS: Add chart container back in - it was commented out earlier -->
-        <div id="gold-rupee-chart" class="chart-container">
-            <!-- This initialization script is critical -->
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    console.log("Initializing gold-rupee chart");
-                    if (typeof loadGoldRupeeChart === 'function') {
-                        loadGoldRupeeChart('gold-rupee-chart');
-                    } else {
-                        console.error("loadGoldRupeeChart function not found!");
-                    }
-                });
-            </script>
-        </div>
     </main>
     
     <!-- Update the footer section -->
