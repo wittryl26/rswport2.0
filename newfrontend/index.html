@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="css/horizontal-showcase.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" 
+        integrity="sha256-+8RZJLnHfcyCI4tWAZiELyCxT0L19TyzbCSB1pKHUAo=" 
+        crossorigin="anonymous"
+    ></script>
     <!-- Remove all other chart scripts -->
     <!-- <script src="js/direct-chart.js"></script> -->
     <!-- <script src="js/chart-loading-fix.js"></script> -->
-    
-    <!-- Add the proven fix script -->
-    <script src="js/fix-gold-chart.js"></script>
+    <!-- <script src="js/fix-gold-chart.js"></script> -->
     
     <script>
         // Verify Chart.js is loaded
@@ -136,16 +138,19 @@
                 <!-- Cards will be dynamically loaded here -->
             </div>
         </section>
-        <div class="loading-indicator" id="loading">Loading more projects...</div>
         
-        <!-- RESTORE THIS EXACT CONTAINER - DO NOT CHANGE ANYTHING -->
+        <!-- IMPORTANT: This is the ONLY chart container that should exist -->
         <div id="gold-rupee-chart" class="chart-container">
             <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    loadGoldRupeeChart('gold-rupee-chart');
+                window.addEventListener('load', function() {
+                    if (typeof loadGoldRupeeChart === 'function') {
+                        setTimeout(() => loadGoldRupeeChart('gold-rupee-chart'), 100);
+                    }
                 });
             </script>
         </div>
+        
+        <div class="loading-indicator" id="loading">Loading more projects...</div>
     </main>
     
     <!-- Update the footer section -->
