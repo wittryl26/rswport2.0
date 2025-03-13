@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/horizontal-showcase.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
         if (typeof Chart === 'undefined') {
             console.log('Primary Chart.js failed, trying fallback');
@@ -143,10 +143,8 @@
         <!-- IMPORTANT: This is the ONLY chart container that should exist -->
         <div id="gold-rupee-chart" class="chart-container">
             <script>
-                window.addEventListener('load', function() {
-                    if (typeof loadGoldRupeeChart === 'function') {
-                        setTimeout(() => loadGoldRupeeChart('gold-rupee-chart'), 100);
-                    }
+                document.addEventListener('DOMContentLoaded', () => {
+                    loadGoldRupeeChart('gold-rupee-chart');
                 });
             </script>
         </div>
