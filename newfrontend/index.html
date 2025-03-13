@@ -115,20 +115,20 @@
         
     <main class="container">
         <section id="projects">
-            <!-- Move chart container INSIDE projects section -->
-            <div id="gold-rupee-chart" class="chart-container">
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        loadGoldRupeeChart('gold-rupee-chart');
-                    });
-                </script>
-            </div>
-            
             <div class="card-grid" id="card-container">
                 <!-- Cards will be dynamically loaded here -->
             </div>
         </section>
-        
+
+        <!-- Return chart container to original position -->
+        <div id="gold-rupee-chart" class="chart-container">
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    loadGoldRupeeChart('gold-rupee-chart');
+                });
+            </script>
+        </div>
+
         <div class="loading-indicator" id="loading">Loading more projects...</div>
     </main>
     
