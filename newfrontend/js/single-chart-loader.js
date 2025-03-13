@@ -1,3 +1,8 @@
+// Disable this entire file to prevent conflicts
+/*
+Original code commented out to prevent interference with chart initialization
+*/
+
 /**
  * Single-purpose chart loader that guarantees chart initialization
  */
