@@ -11,6 +11,7 @@
         container.innerHTML = '';
         container.appendChild(canvas);
         
+        // Just create chart with static data - don't try to fetch from API
         new Chart(canvas, {
             type: 'line',
             data: {
@@ -57,6 +58,9 @@
                 }
             }
         });
+        
+        // Mark container as initialized
+        container.setAttribute('data-initialized', 'true');
     };
 })();
 

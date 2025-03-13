@@ -9,6 +9,12 @@ const API_CONFIG = {
     }
 };
 
+// Add initialization function that was missing
+window.initializeApiConfig = async function() {
+    console.log('Initializing API configuration');
+    return API_CONFIG;
+};
+
 // Make config available globally
 window.API_CONFIG = API_CONFIG;
 
