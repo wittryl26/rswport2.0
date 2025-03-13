@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="css/horizontal-showcase.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js MUST be first -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     
-    <!-- Add this right before loading the chart-customization.js script -->
+    <!-- Order these exactly as they were when working -->
     <script src="js/fallback-data.js"></script>
-    
     <script src="js/api-config.js"></script>
     <script src="js/chart-customization.js"></script>
     
@@ -113,17 +114,9 @@
         
     <main class="container">
         <section id="projects">
+            <!-- ONLY this - let the chart get injected here by project cards -->
             <div class="card-grid" id="card-container">
                 <!-- Cards will be dynamically loaded here -->
-            </div>
-
-            <!-- Restore chart container here -->
-            <div id="gold-rupee-chart" class="chart-container">
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        loadGoldRupeeChart('gold-rupee-chart');
-                    });
-                </script>
             </div>
         </section>
 
@@ -157,7 +150,7 @@
     </div>
     -->
     
-    <!-- Load scripts in the correct order -->
+    <!-- Load other scripts in original working order -->
     <script src="js/api-service.js"></script>
     <script src="js/sample-data-loader.js"></script>
     <script src="js/bottleneck-data-service.js"></script>
