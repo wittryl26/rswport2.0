@@ -115,24 +115,19 @@
         
     <main class="container">
         <section id="projects">
-            <!-- Projects heading is now in the scroll indicator -->
+            <!-- Move chart container INSIDE projects section -->
+            <div id="gold-rupee-chart" class="chart-container">
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        loadGoldRupeeChart('gold-rupee-chart');
+                    });
+                </script>
+            </div>
+            
             <div class="card-grid" id="card-container">
                 <!-- Cards will be dynamically loaded here -->
             </div>
         </section>
-        
-        <!-- IMPORTANT: This is the ONLY chart container that should exist -->
-        <div id="gold-rupee-chart" class="chart-container">
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    if (typeof loadGoldRupeeChart === 'function') {
-                        loadGoldRupeeChart('gold-rupee-chart');
-                    } else {
-                        console.error('Chart function not found');
-                    }
-                });
-            </script>
-        </div>
         
         <div class="loading-indicator" id="loading">Loading more projects...</div>
     </main>
