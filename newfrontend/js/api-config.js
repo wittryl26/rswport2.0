@@ -74,23 +74,22 @@
  */
 
 const API_CONFIG = {
-  // Change this to your deployed API URL
-  baseUrl: 'https://your-api-url.onrender.com',
-  
-  // Fallback to localhost for development
-  localUrl: 'http://localhost:3001',
-  
-  // Endpoints
-  endpoints: {
-    goldRupee: '/gold-rupee',
-    economicData: '/econ-data',
-    financialData: '/financial',
-    bottleneckData: '/api/bottleneck-data'
-  },
-  
-  // Request timeout in milliseconds
-  timeout: 8000
+    // Update base URL for production
+    baseUrl: window.location.hostname === 'localhost' 
+        ? 'http://localhost:3001'
+        : 'https://api.rylandw.com', // or your actual API endpoint
+    endpoints: {
+        goldRupee: '/api/gold-rupee',
+        economicData: '/econ-data',
+        financialData: '/financial',
+        bottleneckData: '/api/bottleneck-data'
+    },
+    // Request timeout in milliseconds
+    timeout: 8000
 };
+
+// Make config available globally
+window.API_CONFIG = API_CONFIG;
 
 // Don't edit below this line
 if (typeof module !== 'undefined') {
