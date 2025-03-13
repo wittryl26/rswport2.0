@@ -249,22 +249,33 @@
     // Export only what's needed
     window.createStandaloneGoldRupeeChart = createStandaloneGoldRupeeChart;
     
-    // Make sure this function exists and is properly exported
+    // Make sure this function exists globally
     window.loadGoldRupeeChart = function(containerId) {
         console.log("Loading gold-rupee chart in:", containerId);
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        // Clear any existing chart
-        while (container.firstChild) {
-            container.firstChild.remove();
+        
+        if (!document.getElementById(containerId)) {
+            console.error("Chart container not found");
+            return;
         }
+        
+        fetch(`${window.API_CONFIG.baseUrl}${window.API_CONFIG.endpoints.goldRupee}`)
+            .then(response => response.json())
+            .then(data => {
+                createChart(containerId, data);
+            })
+            .catch(error => {
+                console.error("API error, using fallback data:", error);
+                createChart(containerId, getFallbackData());
+            });
+    };
 
+    function createChart(containerId, data) {
+        const container = document.getElementById(containerId);
         const canvas = document.createElement('canvas');
+        container.innerHTML = '';
         container.appendChild(canvas);
         
-        const ctx = canvas.getContext('2d');
-        new Chart(ctx, {
+        new Chart(canvas, {
             type: 'line',
             data: {
                 labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
@@ -310,7 +321,7 @@
                 }
             }
         });
-    };
+    }
 
     console.log('Simplified gold-rupee chart module loaded');
 })();

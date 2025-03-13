@@ -14,10 +14,8 @@
     <!-- Add this right before loading the chart-customization.js script -->
     <script src="js/fallback-data.js"></script>
     
-    <script src="js/chart-customization.js"></script>
-    
-    <!-- Add the API configuration script in the head -->
     <script src="js/api-config.js"></script>
+    <script src="js/chart-customization.js"></script>
     
     <!-- Console logging for debugging -->
     <script>
@@ -118,16 +116,16 @@
             <div class="card-grid" id="card-container">
                 <!-- Cards will be dynamically loaded here -->
             </div>
-        </section>
 
-        <!-- REMOVE this container - it's causing the duplicate chart at the bottom -->
-        <!-- <div id="gold-rupee-chart" class="chart-container">
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    loadGoldRupeeChart('gold-rupee-chart');
-                });
-            </script>
-        </div> -->
+            <!-- Restore chart container here -->
+            <div id="gold-rupee-chart" class="chart-container">
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        loadGoldRupeeChart('gold-rupee-chart');
+                    });
+                </script>
+            </div>
+        </section>
 
         <div class="loading-indicator" id="loading">Loading more projects...</div>
     </main>

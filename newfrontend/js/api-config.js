@@ -1,9 +1,11 @@
 // Simple API configuration
 const API_CONFIG = {
-    baseUrl: 'https://rylandw.vercel.app',  // Point directly to Vercel deployment
+    baseUrl: window.location.hostname.includes('localhost') 
+        ? 'http://localhost:3001'
+        : 'https://rylandw.vercel.app',
     endpoints: {
         goldRupee: '/api/gold-rupee',
-        economicData: '/econ-data'
+        economicData: '/api/economic-data'
     }
 };
 
