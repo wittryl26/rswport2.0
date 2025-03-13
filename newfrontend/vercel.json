@@ -2,6 +2,10 @@
   "version": 2,
   "routes": [
     {
+      "src": "/api/gold-rupee",
+      "dest": "/js/fallback-data.js"
+    },
+    {
       "src": "/js/(.*)",
       "dest": "/js/$1"
     },

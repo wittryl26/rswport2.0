@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="css/horizontal-showcase.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script 
-        src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" 
-        integrity="sha256-+8RZJLnHfcyCI4tWAZiELyCxT0L19TyzbCSB1pKHUAo=" 
-        crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        if (typeof Chart === 'undefined') {
+            console.log('Primary Chart.js failed, trying fallback');
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"><\/script>');
+        }
+    </script>
     <!-- Remove all other chart scripts -->
     <!-- <script src="js/direct-chart.js"></script> -->
     <!-- <script src="js/chart-loading-fix.js"></script> -->
@@ -122,7 +124,6 @@
                     <span class="button-text">View Resume</span>
                 </a>
             </div>
-        </div>
         
         <!-- Revert back to the original scroll indicator structure -->
         <div class="scroll-indicator fade-in delay-3" id="projects-scroll">
