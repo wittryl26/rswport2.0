@@ -1366,4 +1366,16 @@ try {
     // ...existing error handling code...
 }
 
+async function initializeGoldRupeeChart(containerId) {
+    try {
+        const data = await window.apiService.getGoldRupeeData();
+        if (data) {
+            loadGoldRupeeChart(containerId);
+        }
+    } catch (error) {
+        console.log('Using fallback chart data');
+        loadGoldRupeeChart(containerId);
+    }
+}
+
 // ...existing code...

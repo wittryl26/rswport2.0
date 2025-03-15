@@ -1,7 +1,16 @@
 // API Service with fallback initialization
 class ApiService {
     constructor() {
-        console.log('API Service initialized with baseUrl:', this.baseUrl);
+        this.config = {
+            baseUrl: window.location.hostname.includes('localhost') 
+                ? 'http://localhost:3001'
+                : 'https://rylandw.vercel.app',
+            endpoints: {
+                goldRupee: '/api/gold-rupee',
+                economicData: '/api/economic-data'
+            }
+        };
+        console.log('API Service initialized with baseUrl:', this.config.baseUrl);
     }
 
     async initialize() {
