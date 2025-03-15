@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js and our chart loader only -->
+    <!-- Load Chart.js first -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Load our chart loader -->
     <script src="js/chart-loader.js"></script>
     
     <!-- Console logging for debugging -->
@@ -162,7 +163,9 @@
     <script src="js/sample-data-loader.js"></script>
     <script src="js/bottleneck-data-service.js"></script>
     <script src="js/task-management.js"></script>
-    <script src="js/chart-customization.js"></script>
+    <!-- Remove these conflicting scripts -->
+    <!-- <script src="js/chart-customization.js"></script> -->
+    <!-- <script src="js/single-chart-loader.js"></script> -->
     <script src="js/pdf-viewer.js"></script>
     <script src="js/horizontal-showcase.js"></script>
     <script src="js/modern-main.js"></script>
