@@ -37,25 +37,45 @@ class YahooFinanceService {
     }
 
     async getGoldAndRupeeData() {
+        // Use a 5-year range instead of 1 year
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setFullYear(endDate.getFullYear() - 1);
+        startDate.setFullYear(endDate.getFullYear() - 5); // Change to 5 years
 
         try {
+            // Format dates correctly for Yahoo Finance API
+            const period1 = Math.floor(startDate.getTime() / 1000);
+            const period2 = Math.floor(endDate.getTime() / 1000);
+
             const [goldData, inrData] = await Promise.all([
                 this.fetchData('GC=F', startDate, endDate),  // Gold futures
                 this.fetchData('INR=X', startDate, endDate)  // INR/USD exchange rate
             ]);
 
-            return {
-                title: "Gold Price vs USD/INR Exchange Rate",
-                data: goldData.map((gold, index) => ({
-                    date: gold.date,
-                    goldPrice: parseFloat(gold.close?.toFixed(2) || 0),
-                    rupeeRate: parseFloat(inrData[index]?.close?.toFixed(2) || 0)
-                })).filter(item => item.goldPrice && item.rupeeRate),
-                lastUpdated: new Date().toISOString()
+            // Process and validate the data
+            const processedData = {
+                title: "Gold Price vs USD/INR Exchange Rate (5 Year Trend)",
+                data: goldData
+                    .filter((gold, index) => gold.close && inrData[index]?.close) // Remove null values
+                    .map((gold, index) => ({
+                        date: gold.date,
+                        goldPrice: parseFloat(gold.close.toFixed(2)),
+                        rupeeRate: parseFloat(inrData[index].close.toFixed(2))
+                    })),
+                metadata: {
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
+                    lastUpdated: new Date().toISOString()
+                }
             };
+
+            // Verify we have data
+            if (!processedData.data.length) {
+                throw new Error('No valid data points returned from Yahoo Finance');
+            }
+
+            console.log(`Retrieved ${processedData.data.length} data points from Yahoo Finance`);
+            return processedData;
         } catch (error) {
             console.error('Error fetching Yahoo Finance data:', error);
             throw error;
