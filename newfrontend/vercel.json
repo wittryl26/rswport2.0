@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/api/gold-rupee",
-      "dest": "/js/fallback-data.js"
+      "dest": "/api/gold-rupee.js"
     },
     {
       "src": "/js/(.*)",
