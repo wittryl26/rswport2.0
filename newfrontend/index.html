@@ -10,13 +10,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js MUST be first -->
+    <!-- Chart.js and our chart loader only -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    
-    <!-- Order these exactly as they were when working -->
-    <script src="js/fallback-data.js"></script>
-    <script src="js/api-config.js"></script>
-    <script src="js/chart-customization.js"></script>
+    <script src="js/chart-loader.js"></script>
     
     <!-- Console logging for debugging -->
     <script>
@@ -115,6 +111,18 @@
     <main class="container">
         <section id="projects">
             <div class="card-grid" id="card-container">
+                <!-- First card will contain chart -->
+                <div class="card">
+                    <div class="card-content">
+                        <div id="gold-rupee-chart" class="chart-container">
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    loadGoldRupeeChart('gold-rupee-chart');
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
                 <!-- Cards will be dynamically loaded here -->
             </div>
         </section>
